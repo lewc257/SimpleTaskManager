@@ -10,14 +10,14 @@ create table user_account(
 	primary key(user_id)
 );
 
-create table customer(
-	customer_id int auto_increment,
+create table user_info(
+	user_info_id int auto_increment,
 	user_id int not null unique,
 	first_name varchar(255) not null,
 	last_name varchar(255) not null,
 	personal_email varchar(255) not null unique,
 	created timestamp not null default current_timestamp,
-	primary key(customer_id),
+	primary key(user_info_id),
 	foreign key (user_id) references user_account(user_id)
 );
 

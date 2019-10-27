@@ -11,6 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.webproject.simpletaskmanager.entities.Useraccount;
 
-public interface UseraccountRepository extends JpaRepository<Useraccount, Integer> {
-	
+public interface UseraccountRepository {
+	Useraccount findUseraccountById(Integer id);
+	Useraccount findUseraccountByUsername(String username);
+	Useraccount saveAccount(Useraccount useraccount);
+	void deleteAccount(Useraccount useraccount);
 }

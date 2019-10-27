@@ -13,13 +13,13 @@ public class Useraccount {
 	@Column(name="user_id")
 	private Integer id;
 	
-	@Column(name="username")
+	@Column(name="username", nullable=false)
 	private String username;
 	
-	@Column(name="password")
+	@Column(name="password", nullable=false)
 	private String password;
 	
-	@Column(name="created")
+	@Column(name="created", nullable=false)
 	private Timestamp created;
 	
 	public Useraccount() {
@@ -49,7 +49,11 @@ public class Useraccount {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	public void setCreated(Timestamp created) {
+		this.created = created;
+	}
+	
 	public Timestamp getCreated() {
 		return created;
 	}
