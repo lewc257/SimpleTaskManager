@@ -1,7 +1,9 @@
 package com.webproject.simpletaskmanager.entities;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -22,8 +24,46 @@ public class Useraccount {
 	@Column(name="created", nullable=false)
 	private Timestamp created;
 	
-	public Useraccount() {
-		
+	@OneToOne(mappedBy="useraccount", cascade=CascadeType.ALL)
+	private UserInfo userInfo;
+	
+	@OneToMany(mappedBy="useraccount", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Task> tasks = new ArrayList<Task>();
+	
+	
+	public void addTask(Task task) {
+		if (tasks == null) {
+			tasks = new ArrayList<Task>();
+		}
+		tasks.add(task);
+		task.setUseraccount(this);
+	}
+	
+	public void removeTask(Task task) {
+		if (tasks == null) {
+			tasks = new ArrayList<Task>();
+		}
+		if (!tasks.isEmpty()) {
+			tasks.remove(task);
+			task.setUseraccount(null);
+		}
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+		userInfo.setUseraccount(this);
 	}
 
 	public Integer getId() {
@@ -60,9 +100,7 @@ public class Useraccount {
 	
 	@Override
 	public String toString() {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = new Date(created.getTime());
-		String formattedDate = formatter.format(date);
-		return String.format("%d, %s, %s, %s", id, username, password, formattedDate);
+		return "Useraccount [id=" + id + ", username=" + username + ", password=" + password + ", created=" + created
+				+ "]";
 	}
 }

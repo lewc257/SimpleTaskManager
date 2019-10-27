@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.transaction.Transactional;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,28 @@ import com.webproject.simpletaskmanager.entities.Useraccount;
 @Transactional
 public class UseraccountRepositoryImplTest {
 	
+	/*
+	 * improvements https://howtodoinjava.com/jpa/jpa-remove-delete-entity-example/
+	 */
 	@Autowired
 	UseraccountRepositoryImpl useraccountRepository;
 	
+	private static Integer user_id;
+	
+	@Before
+	public void setUp() {
+		Useraccount user = new Useraccount();
+		user.setUsername("ABC");
+		user.setPassword("ABC");
+		Timestamp created = new Timestamp(new Date().getTime());
+		user.setCreated(created);
+		user = useraccountRepository.saveAccount(user);
+		user_id = user.getId();
+	}
+	
 	@Test
 	public void testFindExisitingUserById() {
-		Useraccount user = useraccountRepository.findUseraccountById(1);
+		Useraccount user = useraccountRepository.findUseraccountById(user_id);
 		Assert.assertNotNull(user);
 	}
 	
