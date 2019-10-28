@@ -33,32 +33,7 @@ public class SimpletaskmanagerApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		addUserInfoExample();
-	}
-	
-	public void addUserInfoExample() {
-		Useraccount user = repos.findUseraccountById(1);
-		UserInfo info = new UserInfo();
-		info.setFirstName("testFirst");
-		info.setLastName("testLast");
-		info.setPersonalEmail("test@test.com");
-		info.setCreated(new Timestamp(new Date().getTime()));
-		user.setUserInfo(info);
-		user = repos.saveAccount(user);
-		if (user.getId() != null) {
-			System.out.println("Success");
-		}
-	}
-	
-	public void addTaskExample() {
-		Useraccount user = repos.findUseraccountById(1);
-		Task task = new Task();
-		task.setName("testtask2");
-		task.setStatus(false);
-		task.setCreated(new Timestamp(new Date().getTime()));
-		user.addTask(task);
-		user = repos.saveAccount(user);
-		System.out.println(user);
+		
 	}
 	
 }

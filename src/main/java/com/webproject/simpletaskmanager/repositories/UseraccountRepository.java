@@ -15,5 +15,5 @@ public interface UseraccountRepository {
 	Useraccount findUseraccountById(Integer id);
 	Useraccount findUseraccountByUsername(String username);
 	Useraccount saveAccount(Useraccount useraccount);
-	void deleteAccount(Useraccount useraccount);
+	Useraccount deleteAccount(Useraccount useraccount);
 }

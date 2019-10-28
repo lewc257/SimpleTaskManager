@@ -48,11 +48,12 @@ public class UseraccountRepositoryImpl implements UseraccountRepository{
 	}
 
 	@Override
-	public void deleteAccount(Useraccount useraccount) {
+	public Useraccount deleteAccount(Useraccount useraccount) {
 		if (em.contains(useraccount)) {
 			em.remove(useraccount);
 		} else {
-			em.merge(useraccount);
+			useraccount = em.merge(useraccount);
 		}
+		return useraccount;
 	}
 }

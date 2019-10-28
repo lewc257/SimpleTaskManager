@@ -47,7 +47,7 @@ public class UseraccountRepositoryImplTest {
 	
 	@Test 
 	public void testFindExistingUserByUsername() {
-		Useraccount useraccount = useraccountRepository.findUseraccountByUsername("test");
+		Useraccount useraccount = useraccountRepository.findUseraccountByUsername("ABC");
 		Assert.assertNotNull(useraccount);
 	}
 	
@@ -60,7 +60,7 @@ public class UseraccountRepositoryImplTest {
 	@Test
 	public void testSaveUseraccount() {
 		Useraccount useraccount = new Useraccount();
-		useraccount.setUsername("ABC");
+		useraccount.setUsername("JKL");
 		useraccount.setPassword("DEF");
 		Date date = new Date();
 		Timestamp created = new Timestamp(date.getTime());
@@ -72,20 +72,19 @@ public class UseraccountRepositoryImplTest {
 	
 	@Test
 	public void testUpdateUseraccount() {
-		Useraccount existingUser = useraccountRepository.findUseraccountById(1);
+		Useraccount existingUser = useraccountRepository.findUseraccountById(user_id);
 		existingUser.setUsername("test1");
 		existingUser.setPassword("test1");
-		useraccountRepository.saveAccount(existingUser);
-		existingUser = useraccountRepository.findUseraccountById(1);
+		existingUser = useraccountRepository.saveAccount(existingUser);
 		Assert.assertEquals("test1", existingUser.getUsername());
 		Assert.assertEquals("test1", existingUser.getPassword());
 	}
 	
 	@Test
 	public void testDeleteUseraccount() {
-		Useraccount user = useraccountRepository.findUseraccountById(1);
+		Useraccount user = useraccountRepository.findUseraccountById(user_id);
 		useraccountRepository.deleteAccount(user);
-		user = useraccountRepository.findUseraccountById(1);
+		user = useraccountRepository.findUseraccountById(user_id);
 		Assert.assertNull(user);
 	}
 
