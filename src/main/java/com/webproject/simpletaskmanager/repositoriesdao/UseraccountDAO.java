@@ -56,4 +56,8 @@ public class UseraccountDAO implements UseraccountDAOLocal{
 		}
 		return useraccount;
 	}
+	
+	public List<Useraccount> findAll(){
+		return em.createQuery("SELECT u FROM Useraccount u", Useraccount.class).getResultList();
+	}
 }
