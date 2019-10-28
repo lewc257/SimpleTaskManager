@@ -1,4 +1,4 @@
-package com.webproject.simpletaskmanager.repositoriesimpl;
+package com.webproject.simpletaskmanager.repositoriesdao;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.junit.Test;
 import com.webproject.simpletaskmanager.entities.Task;
 import com.webproject.simpletaskmanager.entities.Useraccount;
+import com.webproject.simpletaskmanager.repositoriesdao.TaskDAO;
+import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 
 @SpringBootTest
 @Transactional

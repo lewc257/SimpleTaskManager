@@ -1,4 +1,4 @@
-package com.webproject.simpletaskmanager.repositoriesimpl;
+package com.webproject.simpletaskmanager.repositoriesdao;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -12,8 +12,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.webproject.simpletaskmanager.repositoriesimpl.UseraccountDAO;
+
 import com.webproject.simpletaskmanager.entities.Useraccount;
+import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

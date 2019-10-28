@@ -18,7 +18,7 @@ import com.webproject.simpletaskmanager.entities.Task;
 import com.webproject.simpletaskmanager.entities.UserInfo;
 import com.webproject.simpletaskmanager.entities.Useraccount;
 import com.webproject.simpletaskmanager.repositories.UseraccountDAOLocal;
-import com.webproject.simpletaskmanager.repositoriesimpl.UseraccountDAO;
+import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 
 @SpringBootApplication
 @Transactional

@@ -1,4 +1,4 @@
-package com.webproject.simpletaskmanager.repositoriesimpl;
+package com.webproject.simpletaskmanager.repositoriesdao;
 
 import java.util.List;
 
