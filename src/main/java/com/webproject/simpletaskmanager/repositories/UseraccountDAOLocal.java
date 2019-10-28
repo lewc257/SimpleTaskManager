@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.webproject.simpletaskmanager.entities.Useraccount;
 
-public interface UseraccountRepository {
+public interface UseraccountDAOLocal {
 	Useraccount findUseraccountById(Integer id);
 	Useraccount findUseraccountByUsername(String username);
 	Useraccount saveAccount(Useraccount useraccount);

@@ -12,16 +12,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.webproject.simpletaskmanager.repositoriesimpl.UseraccountRepositoryImpl;
+import com.webproject.simpletaskmanager.repositoriesimpl.UseraccountDAO;
 import com.webproject.simpletaskmanager.entities.Useraccount;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional
-public class UseraccountRepositoryImplTest {
+public class UseraccountDAOTest {
 
 	@Autowired
-	UseraccountRepositoryImpl useraccountRepository;
+	UseraccountDAO useraccountRepository;
 	
 	@Test
 	public void testFindExisitingUserById() {

@@ -17,15 +17,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.webproject.simpletaskmanager.entities.Task;
 import com.webproject.simpletaskmanager.entities.UserInfo;
 import com.webproject.simpletaskmanager.entities.Useraccount;
-import com.webproject.simpletaskmanager.repositories.UseraccountRepository;
-import com.webproject.simpletaskmanager.repositoriesimpl.UseraccountRepositoryImpl;
+import com.webproject.simpletaskmanager.repositories.UseraccountDAOLocal;
+import com.webproject.simpletaskmanager.repositoriesimpl.UseraccountDAO;
 
 @SpringBootApplication
 @Transactional
 public class SimpletaskmanagerApplication implements CommandLineRunner {
 	
 	@Autowired
-	UseraccountRepositoryImpl repos;
+	UseraccountDAO repos;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SimpletaskmanagerApplication.class, args);

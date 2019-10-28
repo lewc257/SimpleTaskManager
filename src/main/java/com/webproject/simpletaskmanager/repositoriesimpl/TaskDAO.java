@@ -1,15 +1,17 @@
 package com.webproject.simpletaskmanager.repositoriesimpl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
 import com.webproject.simpletaskmanager.entities.Task;
-import com.webproject.simpletaskmanager.repositories.TaskRepository;
+import com.webproject.simpletaskmanager.repositories.TaskDAOLocal;
 
 @Repository
-public class TaskRepositoryImpl implements TaskRepository{
+public class TaskDAO implements TaskDAOLocal{
 
 	@PersistenceContext
 	private EntityManager em;
@@ -43,6 +45,10 @@ public class TaskRepositoryImpl implements TaskRepository{
 			task = em.merge(task);
 		}
 		return task;
+	}
+	
+	public List<Task> findAll(){
+		return em.createQuery("SELECT t FROM Task t", Task.class).getResultList();
 	}
 
 }

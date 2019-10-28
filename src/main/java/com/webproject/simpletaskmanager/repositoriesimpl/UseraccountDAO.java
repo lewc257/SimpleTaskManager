@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.webproject.simpletaskmanager.entities.Useraccount;
-import com.webproject.simpletaskmanager.repositories.UseraccountRepository;
+import com.webproject.simpletaskmanager.repositories.UseraccountDAOLocal;
 
 @Repository
-public class UseraccountRepositoryImpl implements UseraccountRepository{
+public class UseraccountDAO implements UseraccountDAOLocal{
 	
 	@PersistenceContext
 	private EntityManager em;
 	
-	public UseraccountRepositoryImpl(EntityManager em) {
+	public UseraccountDAO(EntityManager em) {
 		this.em = em;
 	}
 

@@ -18,13 +18,13 @@ import com.webproject.simpletaskmanager.entities.Useraccount;
 @SpringBootTest
 @Transactional
 @RunWith(SpringRunner.class)
-public class TaskRepositoryImplTest {
+public class TaskDAOTest {
 	
 	@Autowired
-	TaskRepositoryImpl taskRepos;
+	TaskDAO taskRepos;
 	
 	@Autowired
-	UseraccountRepositoryImpl useraccRepos;
+	UseraccountDAO useraccRepos;
 	
 	private static Useraccount user;
 	
