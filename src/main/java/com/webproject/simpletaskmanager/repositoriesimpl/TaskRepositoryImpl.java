@@ -20,18 +20,29 @@ public class TaskRepositoryImpl implements TaskRepository{
 	}
 
 	@Override
-	public void removeTask(Task task) {
-		throw new UnsupportedOperationException();
-		
+	public Task removeTask(Task task) {
+		if (em.contains(task)) {
+			em.remove(task);
+		} else {
+			task = em.merge(task);
+		}
+		return task;
 	}
 	
 	public void removeTaskById(Integer id) {
-		throw new UnsupportedOperationException();
+		Task task = findTaskById(id);
+		if (task == null) return;
+		removeTask(task);
 	}
 
 	@Override
 	public Task saveTask(Task task) {
-		throw new UnsupportedOperationException();
+		if (task.getId() == null) {
+			em.persist(task);
+		} else {
+			task = em.merge(task);
+		}
+		return task;
 	}
 
 }

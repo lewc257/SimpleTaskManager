@@ -19,35 +19,25 @@ import com.webproject.simpletaskmanager.entities.Useraccount;
 @RunWith(SpringRunner.class)
 @Transactional
 public class UseraccountRepositoryImplTest {
-	
-	/*
-	 * improvements https://howtodoinjava.com/jpa/jpa-remove-delete-entity-example/
-	 */
+
 	@Autowired
 	UseraccountRepositoryImpl useraccountRepository;
 	
-	private static Integer user_id;
-	
-	@Before
-	public void setUp() {
-		Useraccount user = new Useraccount();
-		user.setUsername("ABC");
-		user.setPassword("ABC");
-		Timestamp created = new Timestamp(new Date().getTime());
-		user.setCreated(created);
-		user = useraccountRepository.saveAccount(user);
-		user_id = user.getId();
+	@Test
+	public void testFindExisitingUserById() {
+		Useraccount user = useraccountRepository.findUseraccountById(1);
+		Assert.assertNotNull(user);
 	}
 	
 	@Test
-	public void testFindExisitingUserById() {
-		Useraccount user = useraccountRepository.findUseraccountById(user_id);
-		Assert.assertNotNull(user);
+	public void testFindUseraccountIdThatDoesntExist() {
+		Useraccount user = useraccountRepository.findUseraccountById(999);
+		Assert.assertNull(user);
 	}
 	
 	@Test 
 	public void testFindExistingUserByUsername() {
-		Useraccount useraccount = useraccountRepository.findUseraccountByUsername("ABC");
+		Useraccount useraccount = useraccountRepository.findUseraccountByUsername("test");
 		Assert.assertNotNull(useraccount);
 	}
 	
@@ -58,7 +48,7 @@ public class UseraccountRepositoryImplTest {
 	}
 	
 	@Test
-	public void testSaveUseraccount() {
+	public void testSaveNewUseraccount() {
 		Useraccount useraccount = new Useraccount();
 		useraccount.setUsername("JKL");
 		useraccount.setPassword("DEF");
@@ -71,8 +61,8 @@ public class UseraccountRepositoryImplTest {
 
 	
 	@Test
-	public void testUpdateUseraccount() {
-		Useraccount existingUser = useraccountRepository.findUseraccountById(user_id);
+	public void testUpdateExisitingUseraccount() {
+		Useraccount existingUser = useraccountRepository.findUseraccountById(1);
 		existingUser.setUsername("test1");
 		existingUser.setPassword("test1");
 		existingUser = useraccountRepository.saveAccount(existingUser);
@@ -81,10 +71,10 @@ public class UseraccountRepositoryImplTest {
 	}
 	
 	@Test
-	public void testDeleteUseraccount() {
-		Useraccount user = useraccountRepository.findUseraccountById(user_id);
+	public void testDeleteExisitingUseraccount() {
+		Useraccount user = useraccountRepository.findUseraccountById(1);
 		useraccountRepository.deleteAccount(user);
-		user = useraccountRepository.findUseraccountById(user_id);
+		user = useraccountRepository.findUseraccountById(1);
 		Assert.assertNull(user);
 	}
 
