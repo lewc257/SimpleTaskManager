@@ -57,6 +57,18 @@ public class UseraccountDAO implements UseraccountDAOLocal{
 		return useraccount;
 	}
 	
+	public Useraccount findUseraccount(String username, String password) {
+		String strQuery = "SELECT u FROM Useraccount u WHERE u.username = :username AND u.password = :password";
+		List<Useraccount> resultList = em.createQuery(strQuery, Useraccount.class)
+		.setParameter("username", username)
+		.setParameter("password", password)
+		.getResultList();
+		if (resultList.isEmpty()) {
+			return null;
+		}
+		return resultList.get(0); 
+	}
+	
 	public List<Useraccount> findAll(){
 		return em.createQuery("SELECT u FROM Useraccount u", Useraccount.class).getResultList();
 	}

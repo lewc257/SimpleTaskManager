@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Login Form</title>
+		<style>
+			.login-box {
+				color_name: red;
+				margin-left:auto;
+				margin-right:auto;
+				text-align:center
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div>
+			<form action="#" th:action="@{/login}" th:object="${loginForm}" method="POST">
+				<p th:if="${invalidCredentials}" class="error">Username or Password is invalid</p>
+				<table>
+					<tr>
+						<td >Username</td>
+						<td>
+							<input type="text" name="username"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Password</td>
+						<td>
+							<input type="text" name="password"/>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="submit" value="Submit"/></td>
+					</tr>
+				</table>
+			</form>
+			<table>
+				<thead>
+					<tr>
+						<td>Username</td>
+						<td>Password</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.username}"></td>
+						<td th:text="${user.password}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

@@ -31,3 +31,10 @@ create table task(
 	primary key (task_id),
 	foreign key (user_id) references user_account(user_id)
 );
+
+
+create table role (
+	role_id int auto_increment,
+	role varchar(255),
+	primary key(role_id)
+);
