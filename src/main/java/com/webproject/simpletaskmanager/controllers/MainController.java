@@ -1,17 +1,20 @@
 package com.webproject.simpletaskmanager.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.webproject.simpletaskmanager.repositoriesdao.TaskDAO;
 import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 
 @Controller
-@RequestMapping("/")
-public class MainViewController {
+public class MainController {
 	
 	@Autowired
 	TaskDAO taskDAO;
@@ -19,10 +22,9 @@ public class MainViewController {
 	@Autowired
 	UseraccountDAO useraccountDAO;
 	
-	@RequestMapping("/tests")
-	public String test(Model model) {
-		model.addAttribute("tasks", taskDAO.findAll());
-		model.addAttribute("users", useraccountDAO.findAll());
-		return "tests";
+	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
+	public String dashboardPage(HttpServletRequest request, Model model) {
+		
+		return "dashboard";
 	}
 }

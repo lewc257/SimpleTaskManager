@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.webproject.simpletaskmanager.entities.Useraccount;
 import com.webproject.simpletaskmanager.forms.LoginForm;
@@ -22,21 +23,17 @@ public class LoginController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginPage(Model model) {
-		model.addAttribute("users", useraccountDAO.findAll());
 		return "login";
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String resultPage(@ModelAttribute("loginForm") LoginForm loginForm, Model model) {
-		String username = loginForm.getUsername();
-		String password = loginForm.getPassword();
-		Useraccount user = useraccountDAO.findUseraccount(username, password);
-
+	@RequestMapping(value="/dashboard", method=RequestMethod.POST)
+	public String resultPage(@ModelAttribute("loginForm") LoginForm loginForm, Model model, RedirectAttributes redirectAttributes) {
+		Useraccount user = useraccountDAO.findUseraccount(loginForm.getUsername(), loginForm.getPassword());
 		if (user == null) {
 			model.addAttribute("invalidCredentials", true);
 			return "login";
 		}
-		model.addAttribute("loggedInUser", user);
-		return "dashboard";
+		redirectAttributes.addFlashAttribute("user", user);
+		return "redirect:/dashboard";
 	}
 }
