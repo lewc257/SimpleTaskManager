@@ -2,10 +2,26 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 	<header>
-		<h1>Dashboard</h1>
+		<h1>Welcome <b th:text="${user.username}"></b></h1>
 	</header>
 	<body>
-		<p th:text="${user.username}">
-		</p>
+		<table>
+			<thead>
+				<tr>
+					<td>Task</td>
+					<td>Status</td>
+					<td>Created</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="task : ${user.tasks}">
+					<td th:text="${task.name}"></td>
+					<td th:text="${task.status}"></td>
+					<td th:text="${task.created}"></td>
+					<td><a th:href="NULL">Edit</a></td>
+					<td><a th:href="NULL">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</body>
 </html>
