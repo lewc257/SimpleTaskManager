@@ -15,7 +15,7 @@ import com.webproject.simpletaskmanager.entities.Useraccount;
 import com.webproject.simpletaskmanager.forms.LoginForm;
 import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 
-@Controller
+@Controller("/login")
 public class LoginController {
 	
 	@Autowired
@@ -27,7 +27,8 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/dashboard", method=RequestMethod.POST)
-	public String resultPage(@ModelAttribute("loginForm") LoginForm loginForm, Model model, RedirectAttributes redirectAttributes) {
+	public String resultPage(@ModelAttribute("loginForm") LoginForm loginForm, Model model, 
+			RedirectAttributes redirectAttributes) {
 		Useraccount user = useraccountDAO.findUseraccount(loginForm.getUsername(), loginForm.getPassword());
 		if (user == null) {
 			model.addAttribute("invalidCredentials", true);
