@@ -10,10 +10,10 @@ public class Task {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="task_id")
 	private Integer id;
-	//name
+	
 	@Column(name="name")
 	private String name;
-	//status
+	
 	@Column(name="status")
 	private Boolean status;
 	//created
@@ -55,6 +55,28 @@ public class Task {
 	public void setCreated(Timestamp created) {
 		this.created = created;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) 
+			return true;
+		if (!(obj instanceof Task)) 
+			return false;
+		
+		Task task = (Task) obj;
+		
+		if (id != null ? !id.equals(task.getId()) : task.getId() != null) 
+			return false;
+		if (name != null ? !name.equals(task.name) : task.getName() != null) 
+			return false;
+		if (status != null ? status != task.status : task.status != null) 
+			return false;
+		if (created != null ? !created.equals(task.getCreated()) : task.created != null) 
+			return false;
+		
+		return true;
+	}
+	
 	@Override
 	public String toString() {
 		return "Task [id=" + id + ", name=" + name + ", status=" + status + ", created=" + created + "]";

@@ -2,7 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 	<header>
-		<h1>Welcome <b th:text="${user.username}"></b></h1>
+		<h1>Welcome <label th:text="${user.username}"></label></h1>
 		<form th:action="@{/dashboard/endsession}" method="POST">
 			<input type="submit" value="Logout"/>
 		</form>

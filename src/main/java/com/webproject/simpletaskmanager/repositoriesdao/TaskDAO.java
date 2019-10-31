@@ -31,10 +31,11 @@ public class TaskDAO implements TaskDAOLocal{
 		return task;
 	}
 	
-	public void removeTaskById(Integer id) {
+	public Task removeTaskById(Integer id) {
 		Task task = findTaskById(id);
-		if (task == null) return;
-		removeTask(task);
+		if (task == null) 
+			return null;
+		return removeTask(task);
 	}
 
 	@Override

@@ -1,4 +1,5 @@
 package com.webproject.simpletaskmanager.entities;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,19 +10,20 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_account")
-public class Useraccount {
+public class Useraccount{
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="user_id")
 	private Integer id;
 	
-	@Column(name="username", nullable=false)
+	@Column(name="username")
 	private String username;
 	
-	@Column(name="password", nullable=false)
+	@Column(name="password")
 	private String password;
 	
-	@Column(name="created", nullable=false)
+	@Column(name="created")
 	private Timestamp created;
 	
 	@OneToOne(mappedBy="useraccount", cascade=CascadeType.ALL)
@@ -39,14 +41,15 @@ public class Useraccount {
 		task.setUseraccount(this);
 	}
 	
-	public void removeTask(Task task) {
+	public boolean removeTask(Task task) {
 		if (tasks == null) {
 			tasks = new ArrayList<Task>();
 		}
-		if (!tasks.isEmpty()) {
-			tasks.remove(task);
-			task.setUseraccount(null);
+		boolean success = tasks.remove(task);
+		if (success) {
+			//task.setUseraccount(null);
 		}
+		return success;
 	}
 
 	public List<Task> getTasks() {
