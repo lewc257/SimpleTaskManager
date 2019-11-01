@@ -12,10 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.webproject.simpletaskmanager.entities.Useraccount;
-import com.webproject.simpletaskmanager.repositories.UseraccountDAOLocal;
 
 @Repository
-public class UseraccountDAO implements UseraccountDAOLocal {
+public class UseraccountDAO{
 
 	@PersistenceContext
 	private EntityManager em;
@@ -24,12 +23,10 @@ public class UseraccountDAO implements UseraccountDAOLocal {
 		this.em = em;
 	}
 
-	@Override
 	public Useraccount findUseraccountById(Integer id) {
 		return em.find(Useraccount.class, id);
 	}
 
-	@Override
 	public Useraccount findUseraccountByUsername(String username) {
 		String strQuery = "SELECT u FROM Useraccount u WHERE u.username = :username";
 		List<Useraccount> results = em.createQuery(strQuery, Useraccount.class).setParameter("username", username)
@@ -37,7 +34,6 @@ public class UseraccountDAO implements UseraccountDAOLocal {
 		return results.size() == 0 ? null : results.get(0);
 	}
 
-	@Override
 	public Useraccount saveUseraccount(Useraccount useraccount) {
 		if (useraccount != null && useraccount.getId() == null) {
 			em.persist(useraccount);
@@ -47,7 +43,6 @@ public class UseraccountDAO implements UseraccountDAOLocal {
 		return useraccount;
 	}
 
-	@Override
 	public Useraccount deleteAccount(Useraccount useraccount) {
 		if (em.contains(useraccount)) {
 			em.remove(useraccount);

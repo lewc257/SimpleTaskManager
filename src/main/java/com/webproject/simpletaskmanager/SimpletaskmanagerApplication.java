@@ -20,9 +20,6 @@ import com.webproject.simpletaskmanager.entities.UserInfo;
 import com.webproject.simpletaskmanager.entities.Useraccount;
 import com.webproject.simpletaskmanager.repositories.TaskRepository;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
-import com.webproject.simpletaskmanager.repositories.UseraccountDAOLocal;
-import com.webproject.simpletaskmanager.repositoriesdao.TaskDAO;
-import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 
 
 @SpringBootApplication

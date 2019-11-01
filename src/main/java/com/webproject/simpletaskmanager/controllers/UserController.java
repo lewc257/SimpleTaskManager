@@ -41,12 +41,6 @@ public class UserController {
 	 * TODO: EDIT
 	 */
 	@Autowired
-	TaskDAO taskDAO;
-	
-	@Autowired
-	UseraccountDAO useraccountDAO;
-	
-	@Autowired
 	TaskRepository taskRepository;
 	
 	@Autowired
@@ -62,23 +56,23 @@ public class UserController {
 	
 	//Creates a new Task
 	@RequestMapping(value="/addTask", method=RequestMethod.POST)
-	public String addTask(@ModelAttribute("name") String taskName, @SessionAttribute("user") Useraccount user,
+	public String addTask(@ModelAttribute("name") String taskName, @SessionAttribute("user") Useraccount loggedInUser,
 			SessionStatus status, Model model) {
 		Task task = new Task();
 		task.setName(taskName);
 		task.setStatus(false);
 		task.setCreated(new Timestamp(new Date().getTime()));
-		user.addTask(task);
+		loggedInUser.addTask(task);
 		taskRepository.save(task);
-		System.out.println("Added new task to " + user);
-		return "dashboard";
+		System.out.println("Added new task to " + loggedInUser);
+		return "redirect:/dashboard";
 	}
 	
 	//Deletes a task
 	@RequestMapping(value="/deleteTask/{id}", method=RequestMethod.GET)
-	public String deleteTask(@PathVariable("id") Integer taskId, @SessionAttribute("user") Useraccount user, SessionStatus status, Model model) {
-		Task existingTask = taskDAO.findTaskById(taskId);
-		if (user.removeTask(existingTask)) {
+	public String deleteTask(@PathVariable("id") Integer taskId, @SessionAttribute("user") Useraccount loggedInUser, SessionStatus status, Model model) {
+		Task existingTask = taskRepository.findTaskById(taskId);
+		if (loggedInUser.removeTask(existingTask)) {
 			taskRepository.deleteTaskById(taskId);
 		}
 		return "redirect:/dashboard";
@@ -87,29 +81,36 @@ public class UserController {
 	//Edits the user info
 	@RequestMapping(value="/user_edit_form", method=RequestMethod.GET)
 	public String editPage(Model model, @SessionAttribute Useraccount user) {
-		UserEditForm userEditForm = new UserEditForm();
-		userEditForm.setFirstName(user.getUserInfo().getFirstName());
-		userEditForm.setLastName(user.getUserInfo().getLastName());
-		userEditForm.setUsername(user.getUsername());
-		userEditForm.setPassword(user.getPassword());
-		userEditForm.setPersonalEmail(user.getUserInfo().getPersonalEmail());
-		model.addAttribute("userInfo", userEditForm);
+		model.addAttribute("userInfo", user);
 		return "user_edit_form";
 	}
 	
-	
+	//Updates the user info
+	//TODO: Validate form
 	@RequestMapping(value="/updateUser", method=RequestMethod.POST)
-	public String editUser(@ModelAttribute("userInfo") UserEditForm userEditForm, @SessionAttribute Useraccount user, Model model) {
-		System.out.println(userEditForm);
-		return "user_edit_form";
+	public String editUser(@ModelAttribute("userInfo") Useraccount userEdit, @SessionAttribute("user") Useraccount loggedInUser, Model model) {
+		String username = userEdit.getUsername();
+		String password = userEdit.getPassword();
+		String firstName = userEdit.getUserInfo().getFirstName();
+		String lastName = userEdit.getUserInfo().getLastName();
+		String personalEmail = userEdit.getUserInfo().getPersonalEmail();
+		
+		loggedInUser.setUsername(username);
+		loggedInUser.setPassword(password);
+		loggedInUser.getUserInfo().setFirstName(firstName);
+		loggedInUser.getUserInfo().setLastName(lastName);
+		loggedInUser.getUserInfo().setPersonalEmail(personalEmail);
+
+		userRepository.save(loggedInUser);
+		return "redirect:/dashboard";
 	}
 	
 	
 	//Logs the user out
 	@RequestMapping(value="/endsession", method=RequestMethod.POST)
-	public String logout(SessionStatus status, @SessionAttribute("user") Useraccount user) {
+	public String logout(SessionStatus status, @SessionAttribute("user") Useraccount loggedInUser) {
 		status.setComplete();
-		System.out.println(user + " has logged out");
+		System.out.println(loggedInUser + " has logged out");
 		return "redirect:/login";
 	}
 }

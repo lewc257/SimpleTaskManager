@@ -32,7 +32,6 @@ public class Useraccount{
 	@OneToMany(mappedBy="useraccount", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Task> tasks = new ArrayList<Task>();
 	
-	
 	public void addTask(Task task) {
 		if (tasks == null) {
 			tasks = new ArrayList<Task>();

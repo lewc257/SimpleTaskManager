@@ -8,10 +8,9 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.webproject.simpletaskmanager.entities.Task;
-import com.webproject.simpletaskmanager.repositories.TaskDAOLocal;
 
 @Repository
-public class TaskDAO implements TaskDAOLocal{
+public class TaskDAO{
 
 	@PersistenceContext
 	private EntityManager em;
@@ -20,12 +19,10 @@ public class TaskDAO implements TaskDAOLocal{
 		this.em = em;
 	}
 	
-	@Override
 	public Task findTaskById(Integer id) {
 		return em.find(Task.class, id);
 	}
 
-	@Override
 	public void removeTask(Task task) {
 		if (!em.contains(task)) {
 			task = em.merge(task);
@@ -40,7 +37,6 @@ public class TaskDAO implements TaskDAOLocal{
 		}
 	}
 
-	@Override
 	public Task saveTask(Task task) {
 		if (task != null && findTaskById(task.getId()) == null) {
 			em.persist(task);
