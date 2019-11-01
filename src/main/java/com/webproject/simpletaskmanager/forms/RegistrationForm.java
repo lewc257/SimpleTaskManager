@@ -1,6 +1,6 @@
 package com.webproject.simpletaskmanager.forms;
 
-public class UserEditForm {
+public class RegistrationForm {
 	private String username;
 	private String password;
 	private String firstName;
@@ -39,7 +39,7 @@ public class UserEditForm {
 	}
 	@Override
 	public String toString() {
-		return "UserEditForm [username=" + username + ", password=" + password + ", firstName=" + firstName
+		return "RegistrationForm [username=" + username + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", personalEmail=" + personalEmail + "]";
 	}
 	

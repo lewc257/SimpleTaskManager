@@ -26,7 +26,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.webproject.simpletaskmanager.entities.Task;
 import com.webproject.simpletaskmanager.entities.UserInfo;
 import com.webproject.simpletaskmanager.entities.Useraccount;
-import com.webproject.simpletaskmanager.forms.UserEditForm;
+import com.webproject.simpletaskmanager.forms.RegistrationForm;
 import com.webproject.simpletaskmanager.repositories.TaskRepository;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
 import com.webproject.simpletaskmanager.repositoriesdao.TaskDAO;
