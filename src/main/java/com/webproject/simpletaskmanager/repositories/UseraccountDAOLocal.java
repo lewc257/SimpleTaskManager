@@ -14,6 +14,6 @@ import com.webproject.simpletaskmanager.entities.Useraccount;
 public interface UseraccountDAOLocal {
 	Useraccount findUseraccountById(Integer id);
 	Useraccount findUseraccountByUsername(String username);
-	Useraccount saveAccount(Useraccount useraccount);
+	Useraccount saveUseraccount(Useraccount useraccount);
 	Useraccount deleteAccount(Useraccount useraccount);
 }

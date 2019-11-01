@@ -36,7 +36,7 @@ public class TaskDAOTest {
 		useraccount.setUsername("ABC");
 		useraccount.setPassword("ABC");
 		useraccount.setCreated(new Timestamp(new Date().getTime()));
-		user = useraccRepos.saveAccount(useraccount);
+		user = useraccRepos.saveUseraccount(useraccount);
 	}
 	
 	@Test
@@ -62,7 +62,7 @@ public class TaskDAOTest {
 		user.addTask(t2);
 		user.addTask(t3);
 		
-		Useraccount useraccount = useraccRepos.saveAccount(user);
+		Useraccount useraccount = useraccRepos.saveUseraccount(user);
 		
 		for(Task task : useraccount.getTasks()) {
 			Assert.assertNotNull(task.getId());

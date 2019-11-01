@@ -56,7 +56,7 @@ public class UseraccountDAOTest {
 		Date date = new Date();
 		Timestamp created = new Timestamp(date.getTime());
 		useraccount.setCreated(created);
-		useraccount = useraccountRepository.saveAccount(useraccount);
+		useraccount = useraccountRepository.saveUseraccount(useraccount);
 		Assert.assertNotNull(useraccount.getId());
 	}
 
@@ -66,7 +66,7 @@ public class UseraccountDAOTest {
 		Useraccount existingUser = useraccountRepository.findUseraccountById(1);
 		existingUser.setUsername("test1");
 		existingUser.setPassword("test1");
-		existingUser = useraccountRepository.saveAccount(existingUser);
+		existingUser = useraccountRepository.saveUseraccount(existingUser);
 		Assert.assertEquals("test1", existingUser.getUsername());
 		Assert.assertEquals("test1", existingUser.getPassword());
 	}

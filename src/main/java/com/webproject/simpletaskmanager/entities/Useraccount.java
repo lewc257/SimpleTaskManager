@@ -45,11 +45,7 @@ public class Useraccount{
 		if (tasks == null) {
 			tasks = new ArrayList<Task>();
 		}
-		boolean success = tasks.remove(task);
-		if (success) {
-			//task.setUseraccount(null);
-		}
-		return success;
+		return tasks.remove(task);
 	}
 
 	public List<Task> getTasks() {

@@ -3,12 +3,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<header>
 		<h1>Welcome <label th:text="${user.username}"></label></h1>
-		<form th:action="@{/dashboard/endsession}" method="POST">
+		<form th:action="@{/endsession}" method="POST">
 			<input type="submit" value="Logout"/>
 		</form>
+		<a th:href="@{/user_edit_form}">Edit Info</a>
 	</header>
 	<body>
-		<form th:action="@{/dashboard/addTask}" th:object="${name}" method="POST">
+		<form th:action="@{/addTask}" th:object="${name}" method="POST">
 			<input type="text" id="name" name="name"/>
 			<input type="submit" value="Add Task"/>
 		</form>
@@ -25,7 +26,7 @@
 					<td th:text="${task.name}"></td>
 					<td th:text="${task.status}"></td>
 					<td th:text="${task.created}"></td>
-					<td><a th:href="@{/dashboard/deleteTask/{id}(id=${task.id})}">Delete</a></td>
+					<td><a th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a></td>
 				</tr>
 			</tbody>
 		</table>
