@@ -36,10 +36,7 @@ import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 @Controller("/dashboard")
 @SessionAttributes("user")
 public class UserController {	
-	/**
-	 * TODO: FILTER BY NAME, FILTER BY DATE, SORT BY DATE
-	 * TODO: EDIT
-	 */
+
 	@Autowired
 	TaskRepository taskRepository;
 	
@@ -77,6 +74,10 @@ public class UserController {
 		}
 		return "redirect:/dashboard";
 	}
+	
+	//TODO: Edit task
+	
+	//TODO: Filter By name, Sort by name, sort by date 
 	
 	//Edits the user info
 	@RequestMapping(value="/user_edit_form", method=RequestMethod.GET)

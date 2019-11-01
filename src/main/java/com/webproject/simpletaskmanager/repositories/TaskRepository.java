@@ -21,4 +21,8 @@ public interface TaskRepository extends JpaRepository<Task, Integer>{
 	@Query("UPDATE Task t SET t.status = :status WHERE t.id = :id")
 	void updateStatusById(@Param("status")Boolean status, @Param("id")Integer id);
 	
+	@Modifying
+	@Query("UPDATE Task t SET t.status = :status, t.name = :name WHERE t.id = :id")
+	void updateTaskById(@Param("status")Boolean status, @Param("name")String name, @Param("id")Integer id);
+	
 }
