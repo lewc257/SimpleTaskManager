@@ -25,8 +25,8 @@
 				<tr th:each="task : ${user.tasks}">
 					<td th:text="${task.name}"></td>
 					<td th:switch="${task.status}">
-						<div th:case="true">DONE</div>
-						<div th:case="false">IN PROGRESS</div>
+						<div th:case="true">Done</div>
+						<div th:case="false">In Progress</div>
 					</td>
 					<td th:text="${task.created}"></td>
 					<td><a th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a></td>

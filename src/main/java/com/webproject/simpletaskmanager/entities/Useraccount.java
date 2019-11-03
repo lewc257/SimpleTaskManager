@@ -46,6 +46,20 @@ public class Useraccount{
 		}
 		return tasks.remove(task);
 	}
+	
+	public void mergeTask(Task task) {
+		if (task != null) {
+			for (int i = 0; i < tasks.size(); i++) {
+				if (tasks.get(i).getId() == task.getId()) {
+					tasks.get(i).setName(task.getName());
+					tasks.get(i).setStatus(task.getStatus());
+					tasks.get(i).setCreated(task.getCreated());
+					tasks.get(i).setUseraccount(task.getUseraccount());
+					return;
+				}
+			}
+		}
+	}
 
 	public List<Task> getTasks() {
 		return tasks;

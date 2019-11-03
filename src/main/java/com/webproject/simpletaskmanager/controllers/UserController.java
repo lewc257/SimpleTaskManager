@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.webproject.simpletaskmanager.entities.Task;
 import com.webproject.simpletaskmanager.entities.UserInfo;
@@ -45,7 +47,7 @@ public class UserController {
 	UserRepository userRepository;
 	
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
-	public String dashboardPage(HttpServletRequest request, Model model) {
+	public String dashboardPage(HttpServletRequest request, SessionStatus status, Model model) {
 		Useraccount user = (Useraccount) model.asMap().get("user");
 		model.addAttribute("user", user);
 		return "dashboard";
@@ -55,6 +57,7 @@ public class UserController {
 	@RequestMapping(value="/addTask", method=RequestMethod.POST)
 	public String addTask(@ModelAttribute("name") String taskName, @SessionAttribute("user") Useraccount loggedInUser,
 			SessionStatus status, Model model) {
+		//TODO: Check for empty name
 		Task task = new Task();
 		task.setName(taskName);
 		task.setStatus(false);
@@ -67,7 +70,7 @@ public class UserController {
 	
 	//Deletes a task
 	@RequestMapping(value="/deleteTask/{id}", method=RequestMethod.GET)
-	public String deleteTask(@PathVariable("id") Integer taskId, @SessionAttribute("user") Useraccount loggedInUser, SessionStatus status, Model model) {
+	public String deleteTask(@PathVariable("id") Integer taskId, @SessionAttribute("user") Useraccount loggedInUser, SessionStatus status ) {
 		Task existingTask = taskRepository.findTaskById(taskId);
 		if (loggedInUser.removeTask(existingTask)) {
 			taskRepository.deleteTaskById(taskId);
@@ -80,16 +83,18 @@ public class UserController {
 	 * https://www.baeldung.com/thymeleaf-select-option
 	 */
 	@RequestMapping(value="/editTask/{id}", method=RequestMethod.GET)
-	public String editTaskPage(@PathVariable("id") Integer taskId, Model model) {
+	public String editTaskPage(@PathVariable("id") Integer taskId, @SessionAttribute("user") Useraccount loggedInUser, Model model) {
 		Task existingTask = taskRepository.findTaskById(taskId);
-		System.out.println(existingTask);
+		model.addAttribute("selectedTask", existingTask);
 		return "edit_task";
 	}
 	
-	@RequestMapping(value="/editTask/{id}", method=RequestMethod.POST)
-	public String editTask(@ModelAttribute("selectedTask") Task selectedTask, @SessionAttribute("user") Useraccount user) {
-		System.out.println(selectedTask);
-		//TODO: Save the task
+	@RequestMapping(value="/editTask/edit", method=RequestMethod.POST)
+	public String editTask(@ModelAttribute("selectedTask") Task editedTask, @SessionAttribute("user") Useraccount loggedInUser, RedirectAttributes redirect) {
+		//TODO: Check for empty 	name
+		editedTask.setUseraccount(loggedInUser);
+		loggedInUser.mergeTask(editedTask);
+		taskRepository.save(editedTask);
 		return "redirect:/dashboard";
 	}
 	
