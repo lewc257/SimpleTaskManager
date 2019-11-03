@@ -47,7 +47,6 @@ public class UserController {
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
 	public String dashboardPage(HttpServletRequest request, Model model) {
 		Useraccount user = (Useraccount) model.asMap().get("user");
-		System.out.println("Logged in user = " + user);
 		model.addAttribute("user", user);
 		return "dashboard";
 	}
@@ -76,13 +75,29 @@ public class UserController {
 		return "redirect:/dashboard";
 	}
 	
-	//TODO: Edit task
+	/*
+	 * TODO: Edit task
+	 * https://www.baeldung.com/thymeleaf-select-option
+	 */
+	@RequestMapping(value="/editTask/{id}", method=RequestMethod.GET)
+	public String editTaskPage(@PathVariable("id") Integer taskId, Model model) {
+		Task existingTask = taskRepository.findTaskById(taskId);
+		System.out.println(existingTask);
+		return "edit_task";
+	}
+	
+	@RequestMapping(value="/editTask/{id}", method=RequestMethod.POST)
+	public String editTask(@ModelAttribute("selectedTask") Task selectedTask, @SessionAttribute("user") Useraccount user) {
+		System.out.println(selectedTask);
+		//TODO: Save the task
+		return "redirect:/dashboard";
+	}
 	
 	//TODO: Filter By name, Sort by name, sort by date 
 	
 	//Edits the user info
 	@RequestMapping(value="/user_edit_form", method=RequestMethod.GET)
-	public String editPage(Model model, @SessionAttribute Useraccount user) {
+	public String editUserPage(Model model, @SessionAttribute Useraccount user) {
 		model.addAttribute("userInfo", user);
 		return "user_edit_form";
 	}

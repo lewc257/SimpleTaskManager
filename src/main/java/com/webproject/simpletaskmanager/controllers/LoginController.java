@@ -33,7 +33,13 @@ public class LoginController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginPage(Model model) {
-		model.addAttribute("uName", "");
+//		LoginForm lastForm = (LoginForm) model.asMap().get("loginForm");
+//		if (lastForm != null) {
+//			lastForm.setPassword("");
+//			model.addAttribute("loginForm", lastForm);
+//		} else {
+//			model.addAttribute("loginForm", new LoginForm());
+//		}
 		return "login";
 	}
 	
@@ -43,7 +49,7 @@ public class LoginController {
 		Useraccount user = userRepository.findUseraccount(loginForm.getUsername(), loginForm.getPassword());
 		if (user == null) {
 			redirectAttributes.addFlashAttribute("invalidCredentials", true);
-			redirectAttributes.addFlashAttribute("uName", loginForm.getUsername());
+			//redirectAttributes.addFlashAttribute("loginForm", loginForm);
 			return "redirect:/login";
 		}
 		redirectAttributes.addFlashAttribute("user", user);
