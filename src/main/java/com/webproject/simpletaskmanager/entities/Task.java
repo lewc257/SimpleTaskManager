@@ -56,6 +56,17 @@ public class Task {
 		this.created = created;
 	}
 	
+	public boolean replaceWith(Task newTask) {
+		if (newTask == null) 
+			return false;
+		this.setId(newTask.getId());
+		this.setName(newTask.getName());
+		this.setStatus(newTask.getStatus());
+		this.setCreated(newTask.getCreated());
+		this.setUseraccount(newTask.getUseraccount());
+		return false;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) 
@@ -81,5 +92,5 @@ public class Task {
 	public String toString() {
 		return "Task [id=" + id + ", name=" + name + ", status=" + status + ", created=" + created + "]";
 	}
-	
+
 }

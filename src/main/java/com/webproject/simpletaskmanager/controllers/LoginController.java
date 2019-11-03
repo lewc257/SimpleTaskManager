@@ -24,44 +24,54 @@ import com.webproject.simpletaskmanager.forms.RegistrationForm;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
 import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 
+/**
+ * 
+ * @author Lewis
+ *
+ */
 @Controller("/login")
 public class LoginController {
 
 	@Autowired
 	UserRepository userRepository;
 
-	
+	/*
+	 * Loads the login page upon request
+	 */
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginPage(Model model) {
-//		LoginForm lastForm = (LoginForm) model.asMap().get("loginForm");
-//		if (lastForm != null) {
-//			lastForm.setPassword("");
-//			model.addAttribute("loginForm", lastForm);
-//		} else {
-//			model.addAttribute("loginForm", new LoginForm());
-//		}
 		return "login";
 	}
 	
+	
+	/*
+	 * verify's the user once the form has been submitted
+	 */
 	@RequestMapping(value="/dashboard", method=RequestMethod.POST)
 	public String verifyUser(@ModelAttribute("loginForm") LoginForm loginForm, Model model, 
 			RedirectAttributes redirectAttributes) {
 		Useraccount user = userRepository.findUseraccount(loginForm.getUsername(), loginForm.getPassword());
 		if (user == null) {
 			redirectAttributes.addFlashAttribute("invalidCredentials", true);
-			//redirectAttributes.addFlashAttribute("loginForm", loginForm);
 			return "redirect:/login";
 		}
 		redirectAttributes.addFlashAttribute("user", user);
 		return "redirect:/dashboard";
 	}
 	
+	
+	/*
+	 * Navigates to the user registration page upon request
+	 */
 	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String registrationPage(Model model) {
 		return "user_registration";
 	}
 	
-	//TODO: Validation
+	
+	/*
+	 * Creates a new user once the registration form has been submitted
+	 */
 	@RequestMapping(value="/registerUser", method=RequestMethod.POST)
 	public String register(@ModelAttribute("registrationForm")RegistrationForm form, Model model) {
 		String username = form.getUsername();
@@ -69,7 +79,7 @@ public class LoginController {
 		String firstName = form.getFirstName();
 		String lastName = form.getLastName();
 		String personalEmail = form.getPersonalEmail();
-		
+		//TODO: Validation
 		Timestamp created = new Timestamp(new Date().getTime());
 		Useraccount user = new Useraccount();
 		user.setUsername(username);
