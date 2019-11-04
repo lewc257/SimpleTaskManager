@@ -7,24 +7,28 @@
 	
 	<body>
 		<div>
-			<form th:action="@{/dashboard}" th:object="${loginForm}" method="POST">
+			<form th:action="@{/login}" th:object="${loginForm}" method="POST">
 				<p th:if="${invalidCredentials}" class="error">Username or Password is invalid</p>
 				<table>
 					<tr>
 						<td >Username</td>
 						<td>
-							<input type="text"name="username" th:field="*{username}" />
+							<input type="text" th:field="*{username}" />
 						</td>
+						<td style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
+						<td style="color:red" th:text="${usernameInvalid}"></td>
 					</tr>
 					
 					<tr>
 						<td>Password</td>
 						<td>
-							<input type="text"name="password" th:field="*{password}"/>
+							<input type="text" th:field="*{password}"/>
 						</td>
+						<td style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
+						<td style="color:red" th:text="${passwordInvalid}"></td>
 					</tr>
 					<tr>
-						<td><input type="submit" value="Submit"/></td>
+						<td><input type="submit" value="Sign In"/></td>
 					</tr>
 				</table>
 			</form>

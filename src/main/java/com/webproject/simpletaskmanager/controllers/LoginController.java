@@ -2,7 +2,9 @@ package com.webproject.simpletaskmanager.controllers;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -41,8 +44,12 @@ public class LoginController {
 	@Autowired
 	UserRepository userRepository;
 	
-//	@Autowired 
-//	LoginFormValidator loginFormValidator;
+	/*
+	 * very useful, because most validators are singletons + unit test mocking becomes easier + 
+	 * your validator could call other Spring components.
+	 */
+	@Autowired 
+	LoginFormValidator loginFormValidator;
 
 	/*
 	 * Loads the login page upon request
@@ -57,17 +64,50 @@ public class LoginController {
 	/*
 	 * verify's the user once the form has been submitted
 	 */
-	@RequestMapping(value="/dashboard", method=RequestMethod.POST)
-	public String verifyUser(@Valid @ModelAttribute("loginForm")  LoginForm loginForm, Model model, 
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(@Valid @ModelAttribute("loginForm")  LoginForm loginForm, Model model, 
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-	
-		Useraccount user = userRepository.findUseraccount(loginForm.getUsername(), loginForm.getPassword());
-		if (user == null) {
-			redirectAttributes.addFlashAttribute("invalidCredentials", true);
-			return "redirect:/login";
+		
+		loginFormValidator.validate(loginForm, bindingResult);
+		
+		if (bindingResult.hasErrors()) {
+			return "login";
+		}
+
+		Useraccount user = userRepository.findByUsername(loginForm.getUsername());
+		
+		Map<String, String> returnMessages = checkDetails(loginForm, user);
+		
+		//Could use binding Result instead or exceptions
+		if (!returnMessages.isEmpty()) {
+			model.addAllAttributes(returnMessages);
+			return "login";
 		}
 		redirectAttributes.addFlashAttribute("user", user);
 		return "redirect:/dashboard";
+	}
+	
+	public Map<String, String> checkDetails(LoginForm form, Useraccount user){
+		Map<String, String> attributes = new HashMap<String, String>();
+		
+		final String usernameKey = "usernameInvalid";
+		final String usernameMsg = "Username is invalid";
+		final String passwordKey = "passwordInvalid";
+		final String passwordMsg = "Password is invalid";
+		
+		if (user == null) {
+			attributes.put(usernameKey, usernameMsg);
+		} else {
+			boolean usernameIsValid = user.getUsername().equals(form.getUsername());
+			boolean passwordIsValid = user.getPassword().equals(form.getPassword());
+			if (!usernameIsValid) {
+				attributes.put(usernameKey, usernameMsg);
+			}
+			if (!passwordIsValid){
+				attributes.put(passwordKey, passwordMsg);
+			}
+		}
+		return attributes;
 	}
 	
 	
