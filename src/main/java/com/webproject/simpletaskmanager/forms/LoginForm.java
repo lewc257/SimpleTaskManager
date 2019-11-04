@@ -1,7 +1,12 @@
 package com.webproject.simpletaskmanager.forms;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class LoginForm {
+	
 	private String username;
+	
 	private String password;
 	
 	public String getUsername() {

@@ -2,11 +2,16 @@ package com.webproject.simpletaskmanager.controllers;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +28,7 @@ import com.webproject.simpletaskmanager.forms.LoginForm;
 import com.webproject.simpletaskmanager.forms.RegistrationForm;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
 import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
+import com.webproject.simpletaskmanager.validators.LoginFormValidator;
 
 /**
  * 
@@ -34,12 +40,16 @@ public class LoginController {
 
 	@Autowired
 	UserRepository userRepository;
+	
+//	@Autowired 
+//	LoginFormValidator loginFormValidator;
 
 	/*
 	 * Loads the login page upon request
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginPage(Model model) {
+		model.addAttribute("loginForm", new LoginForm());
 		return "login";
 	}
 	
@@ -48,8 +58,9 @@ public class LoginController {
 	 * verify's the user once the form has been submitted
 	 */
 	@RequestMapping(value="/dashboard", method=RequestMethod.POST)
-	public String verifyUser(@ModelAttribute("loginForm") LoginForm loginForm, Model model, 
-			RedirectAttributes redirectAttributes) {
+	public String verifyUser(@Valid @ModelAttribute("loginForm")  LoginForm loginForm, Model model, 
+			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	
 		Useraccount user = userRepository.findUseraccount(loginForm.getUsername(), loginForm.getPassword());
 		if (user == null) {
 			redirectAttributes.addFlashAttribute("invalidCredentials", true);

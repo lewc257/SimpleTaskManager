@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>Login Form</title>
 	</head>
@@ -13,14 +13,14 @@
 					<tr>
 						<td >Username</td>
 						<td>
-							<input type="text"name="username"required />
+							<input type="text"name="username" th:field="*{username}" />
 						</td>
 					</tr>
 					
 					<tr>
 						<td>Password</td>
 						<td>
-							<input type="text"name="password" required/>
+							<input type="text"name="password" th:field="*{password}"/>
 						</td>
 					</tr>
 					<tr>
