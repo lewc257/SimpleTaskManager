@@ -76,7 +76,7 @@ public class LoginController{
 	 * verify's the user once the form has been submitted
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(@Valid @ModelAttribute("loginForm")  LoginForm loginForm, Model model, 
+	public String login(@ModelAttribute("loginForm")  LoginForm loginForm, Model model, 
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		loginFormValidator.validate(loginForm, bindingResult);
@@ -88,6 +88,7 @@ public class LoginController{
 		Useraccount user = userRepository.findByUsername(loginForm.getUsername());
 		
 		Map<String, String> messages = new HashMap<String, String>();
+		
 		checkDetails(loginForm, user, messages);
 		if (!messages.isEmpty()) {
 			model.addAllAttributes(messages);
@@ -98,17 +99,12 @@ public class LoginController{
 	}
 	
 	private void checkDetails(LoginForm form, Useraccount user, Map<String, String> messages){
-		final String usernameKey = "usernameInvalid";
-		final String usernameMsg = "Username is invalid";
-		final String passwordKey = "passwordInvalid";
-		final String passwordMsg = "Password is invalid";
-		
 		if (user == null) {
-			messages.put(usernameKey, usernameMsg);
+			messages.put("usernameInvalid", "Username is invalid");
 		} else {
 			boolean passwordIsValid = user.getPassword().equals(form.getPassword());
 			if (!passwordIsValid){
-				messages.put(passwordKey, passwordMsg);
+				messages.put("passwordInvalid", "Password is invalid");
 			}
 		}
 	}
