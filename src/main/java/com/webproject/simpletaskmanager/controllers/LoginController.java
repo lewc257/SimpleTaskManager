@@ -76,38 +76,30 @@ public class LoginController {
 
 		Useraccount user = userRepository.findByUsername(loginForm.getUsername());
 		
-		Map<String, String> returnMessages = checkDetails(loginForm, user);
-		
-		//Could use binding Result instead or exceptions
-		if (!returnMessages.isEmpty()) {
-			model.addAllAttributes(returnMessages);
+		Map<String, String> messages = new HashMap<String, String>();
+		checkDetails(loginForm, user, messages);
+		if (!messages.isEmpty()) {
+			model.addAllAttributes(messages);
 			return "login";
 		}
 		redirectAttributes.addFlashAttribute("user", user);
 		return "redirect:/dashboard";
 	}
 	
-	public Map<String, String> checkDetails(LoginForm form, Useraccount user){
-		Map<String, String> attributes = new HashMap<String, String>();
-		
+	private void checkDetails(LoginForm form, Useraccount user, Map<String, String> messages){
 		final String usernameKey = "usernameInvalid";
 		final String usernameMsg = "Username is invalid";
 		final String passwordKey = "passwordInvalid";
 		final String passwordMsg = "Password is invalid";
 		
 		if (user == null) {
-			attributes.put(usernameKey, usernameMsg);
+			messages.put(usernameKey, usernameMsg);
 		} else {
-			boolean usernameIsValid = user.getUsername().equals(form.getUsername());
 			boolean passwordIsValid = user.getPassword().equals(form.getPassword());
-			if (!usernameIsValid) {
-				attributes.put(usernameKey, usernameMsg);
-			}
 			if (!passwordIsValid){
-				attributes.put(passwordKey, passwordMsg);
+				messages.put(passwordKey, passwordMsg);
 			}
 		}
-		return attributes;
 	}
 	
 	
