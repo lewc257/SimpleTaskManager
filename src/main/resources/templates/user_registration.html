@@ -2,38 +2,50 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
+<head>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/messages.css}"/>
+</head>
+
 <header>
 	<title>Registration</title>
 	<h2>Register</h2>
 </header>
 
 <body>
-	<form th:action="@{/registerUser}" th:object="${registrationForm}" method="POST">
+	<form th:action="@{/registration}" th:object="${registrationForm}" method="POST">
 		<table>
 			<tr>
 				<td>Enter Username</td>
-				<td><input type="text" name="username"/></td>
+				<td><input type="text" th:field="*{username}"/></td>
+				<td class="error_message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
 			</tr>
 			<tr>
 				<td>Enter Password</td>
-				<td><input type="text" name="password"/></td>
+				<td><input type="text" th:field="*{password}"/></td>
+				<td class="error_message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
 			</tr>
 			
 			<tr>
 				<td>Enter First Name</td>
-				<td><input type="text" name="firstName"></td>
+				<td><input type="text" th:field="*{firstName}"></td>
+				<td class="error_message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></td>
 			</tr>
 			
 			<tr>
 				<td>Enter Last Name</td>
-				<td><input type="text" name="lastName"/></td>
+				<td><input type="text" th:field="*{lastName}"/></td>
+				<td class="error_message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{firstName}"></td>
 			</tr>
 			<tr>
 				<td>Enter Personal Email</td>
-				<td><input type="text" name="personalEmail"/></td>
+				<td><input type="text" th:field="*{personalEmail}"/></td>
+				<td class="error_message" th:if="${#fields.hasErrors('personalEmail')}" th:errors="*{personalEmail}"></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Create Account"/></td>
+			</tr>
+			<tr>
+				<td><a th:href="@{/login}">Back to Login</a></td>
 			</tr>
 		</table>
 	</form>

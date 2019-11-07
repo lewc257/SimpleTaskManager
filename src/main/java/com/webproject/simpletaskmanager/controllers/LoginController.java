@@ -1,11 +1,18 @@
 package com.webproject.simpletaskmanager.controllers;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +39,7 @@ import com.webproject.simpletaskmanager.forms.RegistrationForm;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
 import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 import com.webproject.simpletaskmanager.validators.LoginFormValidator;
+import com.webproject.simpletaskmanager.validators.RegistrationFormValidator;
 
 /**
  * 
@@ -39,7 +47,7 @@ import com.webproject.simpletaskmanager.validators.LoginFormValidator;
  *
  */
 @Controller("/login")
-public class LoginController {
+public class LoginController{
 
 	@Autowired
 	UserRepository userRepository;
@@ -50,6 +58,9 @@ public class LoginController {
 	 */
 	@Autowired 
 	LoginFormValidator loginFormValidator;
+	
+	@Autowired
+	RegistrationFormValidator registrationFormValidator;
 
 	/*
 	 * Loads the login page upon request
@@ -108,6 +119,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String registrationPage(Model model) {
+		model.addAttribute("registrationForm", new RegistrationForm());
 		return "user_registration";
 	}
 	
@@ -115,14 +127,20 @@ public class LoginController {
 	/*
 	 * Creates a new user once the registration form has been submitted
 	 */
-	@RequestMapping(value="/registerUser", method=RequestMethod.POST)
-	public String register(@ModelAttribute("registrationForm")RegistrationForm form, Model model) {
+	@RequestMapping(value="/registration", method=RequestMethod.POST)
+	public String register(@ModelAttribute("registrationForm")RegistrationForm form, HttpServletResponse response, BindingResult bindingResult, Model model) {
+		
+		registrationFormValidator.validate(form, bindingResult);
+		if (bindingResult.hasErrors()) {
+			return "user_registration";
+		}
+	
 		String username = form.getUsername();
 		String password = form.getPassword();
 		String firstName = form.getFirstName();
 		String lastName = form.getLastName();
 		String personalEmail = form.getPersonalEmail();
-		//TODO: Validation
+	
 		Timestamp created = new Timestamp(new Date().getTime());
 		Useraccount user = new Useraccount();
 		user.setUsername(username);
