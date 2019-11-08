@@ -125,7 +125,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user-edit", method=RequestMethod.GET)
 	public String editUserPage(Model model, @SessionAttribute Useraccount user) {
-		model.addAttribute("userInfo", user);
+		model.addAttribute("userEdit", user);
 		return "user_edit_form";
 	}
 	
@@ -134,9 +134,9 @@ public class UserController {
 	 * Updates the user
 	 */
 	@RequestMapping(value="/user-edit", method=RequestMethod.POST)
-	public String editUser(@ModelAttribute("userInfo") Useraccount userEdit, @SessionAttribute("user") Useraccount loggedInUser, 
+	public String editUser(@ModelAttribute("userEdit") Useraccount userEdit, @SessionAttribute("user") Useraccount loggedInUser, 
 			BindingResult bindingResult, Model model) {
-		
+
 		userValidator.validate(userEdit, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return "user_edit_form";

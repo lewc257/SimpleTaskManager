@@ -3,36 +3,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<h2>Edit Info</h2>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/messages.css}"/>
 </head>
 
 <body>
 	<div> 
-		<form action="#" th:action="@{/user-edit}" th:object="${userInfo}" method="POST">
+		<form action="#" th:action="@{/user-edit}" th:object="${userEdit}" method="POST">
 			<table>
+				<tr hidden="hidden">
+					<td><input type="text" th:field="*{id}"readonly/></td>
+				</tr>
+				<tr hidden="hidden">
+					<td><input type="text" th:field="*{userInfo.id}" readonly></td>
+				</tr>
 				<tr>
 					<td>Username</td>
 					<td><input type="text" th:field="*{username}"/></td>
-					<td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
+					<td class="error_message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
 				</tr>
 				<tr>
 					<td>Password</td>
 					<td><input type="text" th:field="*{password}"/></td>
-					<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
+					<td class="error_message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
 				</tr>
 				<tr>
 					<td>First name</td>
 					<td><input type="text" th:field="*{userInfo.firstName}"></td>
-					<td th:if="${#fields.hasErrors('userInfo.firstName')}" th:errors="*{userInfo.firstName}"></td>
+					<td class="error_message" th:if="${#fields.hasErrors('userInfo.firstName')}" th:errors="*{userInfo.firstName}"></td>
 				</tr>
 				<tr>
 					<td>Last name</td>
 					<td><input type="text" th:field="*{userInfo.lastName}">
-					<td th:if="${#fields.hasErrors('userInfo.lastName')}" th:errors="*{userInfo.lastName}"></td>
+					<td class="error_message" th:if="${#fields.hasErrors('userInfo.lastName')}" th:errors="*{userInfo.lastName}"></td>
 				</tr>
 				<tr>
 					<td>Personal Email</td>
 					<td><input type="text" th:field="*{userInfo.personalEmail}"></td>
-					<td th:if="${#fields.hasErrors('userInfo.personalEmail')}" th:errors="*{userInfo.personalEmail}"></td>
+					<td class="error_message" th:if="${#fields.hasErrors('userInfo.personalEmail')}" th:errors="*{userInfo.personalEmail}"></td>
 				</tr>
 			</table>
 			<input type="submit" value="Save"/>

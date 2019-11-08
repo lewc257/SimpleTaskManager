@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import com.webproject.simpletaskmanager.entities.UserInfo;
 import com.webproject.simpletaskmanager.entities.Useraccount;
 import com.webproject.simpletaskmanager.repositories.UserInfoRepository;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
@@ -29,10 +30,10 @@ public class UserValidator implements Validator{
 		Useraccount user = (Useraccount) target;
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "username.required");
-//		Integer usernameCount = userRepository.usernameCount(user.getUsername());
-//		if (usernameCount != null && usernameCount > 1){
-//			errors.rejectValue("username", "username.exists");
-//		}
+		Useraccount existingUser = userRepository.findByUsername(user.getUsername());
+		if (existingUser != null && existingUser.getId() != user.getId()) {
+			errors.rejectValue("username", "username.exists");
+		}
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.required");
 		if (user.getPassword().length() < Constants.PASSWORD_MIN_LEN) {
@@ -50,10 +51,10 @@ public class UserValidator implements Validator{
 		}
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userInfo.personalEmail", "personalEmail.required");
-//		Integer emailCount = userInfoRepository.emailCount(user.getUserInfo().getPersonalEmail());
-//		if (emailCount != null && emailCount > 1){
-//			errors.rejectValue("userInfo.personalEmail", "personalEmail.exists");
-//		}
+		UserInfo existingUserInfo = userInfoRepository.findByEmail(user.getUserInfo().getPersonalEmail());
+		if (existingUserInfo != null && existingUserInfo.getId() != user.getUserInfo().getId()){
+			errors.rejectValue("userInfo.personalEmail", "personalEmail.exists");
+		}
 		if (!user.getUserInfo().getPersonalEmail().matches(Constants.EMAIL_REGEX)) {
 			errors.rejectValue("userInfo.personalEmail", "personalEmail.mismatch");
 		}
