@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<Useraccount, Integer> {
 	@Modifying(flushAutomatically=true)
 	@Query("DELETE FROM Useraccount u WHERE u.id = :id")
 	void deleteUseraccountById(@Param("id") Integer id);
+	
+	@Query("SELECT COUNT(u.username) FROM Useraccount u WHERE u.username = :username")
+	Integer usernameCount(@Param("username")String username);
 }

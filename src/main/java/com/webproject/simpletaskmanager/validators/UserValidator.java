@@ -7,6 +7,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.webproject.simpletaskmanager.entities.Useraccount;
+import com.webproject.simpletaskmanager.repositories.UserInfoRepository;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
 
 @Component
@@ -14,6 +15,9 @@ public class UserValidator implements Validator{
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	UserInfoRepository userInfoRepository;
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -23,16 +27,36 @@ public class UserValidator implements Validator{
 	@Override
 	public void validate(Object target, Errors errors) {
 		Useraccount user = (Useraccount) target;
-		//Username
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "username.required");
-		//Password
+//		Integer usernameCount = userRepository.usernameCount(user.getUsername());
+//		if (usernameCount != null && usernameCount > 1){
+//			errors.rejectValue("username", "username.exists");
+//		}
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.required");
-		//first name
+		if (user.getPassword().length() < Constants.PASSWORD_MIN_LEN) {
+			errors.rejectValue("password", "password.invalidLength");
+		}
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userInfo.firstName", "firstname.required");
-		///last name
+		if (!user.getUserInfo().getFirstName().matches(Constants.FIRSTNAME_REGEX)) {
+			errors.rejectValue("userInfo.firstName", "firstName.mismatch");
+		}
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userInfo.lastName", "lastName.required");
-		//personal email
+		if (!user.getUserInfo().getLastName().matches(Constants.LASTNAME_REGEX)) {
+			errors.rejectValue("userInfo.lastName", "lastName.mismatch");
+		}
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userInfo.personalEmail", "personalEmail.required");
+//		Integer emailCount = userInfoRepository.emailCount(user.getUserInfo().getPersonalEmail());
+//		if (emailCount != null && emailCount > 1){
+//			errors.rejectValue("userInfo.personalEmail", "personalEmail.exists");
+//		}
+		if (!user.getUserInfo().getPersonalEmail().matches(Constants.EMAIL_REGEX)) {
+			errors.rejectValue("userInfo.personalEmail", "personalEmail.mismatch");
+		}
 	}
 
 }

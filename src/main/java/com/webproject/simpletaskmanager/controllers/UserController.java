@@ -147,7 +147,7 @@ public class UserController {
 		String firstName = userEdit.getUserInfo().getFirstName();
 		String lastName = userEdit.getUserInfo().getLastName();
 		String personalEmail = userEdit.getUserInfo().getPersonalEmail();
-		//TODO: Validate form
+
 		loggedInUser.setUsername(username);
 		loggedInUser.setPassword(password);
 		loggedInUser.getUserInfo().setFirstName(firstName);

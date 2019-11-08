@@ -14,4 +14,7 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 	
 	@Query("SELECT ui FROM UserInfo ui WHERE ui.personalEmail = :personalEmail")
 	UserInfo findByEmail(@Param("personalEmail") String personalEmail);
+	
+	@Query("SELECT COUNT(ui.personalEmail) FROM UserInfo ui WHERE ui.personalEmail = :personalEmail")
+	Integer emailCount(@Param("personalEmail") String personalEmail);
 }
