@@ -116,8 +116,13 @@ public class UserController {
 	 * Updates a task
 	 */
 	@RequestMapping(value="/edit-do", method=RequestMethod.POST)
-	public String editTask(@ModelAttribute("selectedTask") Task editedTask, @SessionAttribute("user") Useraccount loggedInUser) {
-		//TODO: Check for empty 	name
+	public String editTask(@ModelAttribute("selectedTask") Task editedTask, RedirectAttributes redirect, 
+			@SessionAttribute("user") Useraccount loggedInUser) {
+		if (editedTask.getName() == null || editedTask.getName().isEmpty()) {
+			redirect.addAttribute("id", editedTask.getId());
+			redirect.addFlashAttribute("taskNameError", true);
+			return "redirect:/edit/{id}";
+		}
 		loggedInUser.mergeTask(editedTask);
 		taskRepository.save(editedTask);
 		//TODO: Log save

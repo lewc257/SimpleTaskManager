@@ -4,6 +4,7 @@
 
 <head>
 	<title>Edit Task</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/messages.css}"/>
 </head>
 <header>
 	<h2>Edit Task</h2>
@@ -17,6 +18,7 @@
 			<tr>
 				<td>Task Name:</td>
 				<td><input type="text" th:field="*{name}"/></td>
+				<td class="error_message" th:if="${taskNameError}">Task name is required</td>
 			</tr>
 			<tr>
 				<td>Task Status:</td>
