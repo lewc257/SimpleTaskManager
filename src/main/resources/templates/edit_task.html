@@ -10,7 +10,7 @@
 </header>
 
 <body>
-	<form th:action="@{/editTask/edit}" th:object="${selectedTask}" method="POST">
+	<form th:action="@{/edit-do}" th:object="${selectedTask}" method="POST">
 		<input hidden th:field="*{id}"/>
 		<input hidden th:field="*{created}"/>
 		<table>

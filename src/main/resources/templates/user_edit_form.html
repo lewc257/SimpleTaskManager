@@ -8,7 +8,7 @@
 
 <body>
 	<div> 
-		<form action="#" th:action="@{/user-edit}" th:object="${userEdit}" method="POST">
+		<form action="#" th:action="@{/user-edit-do}" th:object="${userEdit}" method="POST">
 			<table>
 				<tr hidden="hidden">
 					<td><input type="text" th:field="*{id}"readonly/></td>

@@ -1,6 +1,9 @@
 <!DOCTYPE HTML>
 
 <html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/messages.css}"/>
+	</head>
 	<header>
 		<h1>Welcome <label th:text="${user.username}"></label></h1>
 		<form th:action="@{/endsession}" method="POST">
@@ -9,7 +12,8 @@
 		<a th:href="@{/user-edit}">Edit Info</a>
 	</header>
 	<body>
-		<form th:action="@{/addTask}" th:object="${name}" method="POST">
+		<p class="error_message" th:if="${taskNameError}">The name of the task is required</p>
+		<form th:action="@{/add}" th:object="${name}" method="POST">
 			<input type="text" id="name" name="name"/>
 			<input type="submit" value="Add Task"/>
 		</form>
@@ -29,8 +33,8 @@
 						<div th:case="false">In Progress</div>
 					</td>
 					<td th:text="${task.created}"></td>
-					<td><a th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a></td>
-					<td><a th:href="@{/editTask/{id}(id=${task.id})}">Edit</a></td>
+					<td><a th:href="@{/delete/{id}(id=${task.id})}">Delete</a></td>
+					<td><a th:href="@{/edit/{id}(id=${task.id})}">Edit</a></td>
 				</tr>
 			</tbody>
 		</table>

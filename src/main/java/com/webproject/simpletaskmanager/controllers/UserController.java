@@ -68,9 +68,14 @@ public class UserController {
 	/*
 	 * Creates a new task
 	 */
-	@RequestMapping(value="/addTask", method=RequestMethod.POST)
-	public String addTask(@ModelAttribute("name") String taskName, @SessionAttribute("user") Useraccount loggedInUser, Model model) {
-		//TODO: Check for empty name
+	@RequestMapping(value="/add", method=RequestMethod.POST)
+	public String addTask(@ModelAttribute("name") String taskName, BindingResult bindingResult,
+			@SessionAttribute("user") Useraccount loggedInUser, RedirectAttributes redirect, Model model) {
+		
+		if (taskName == null || taskName.isEmpty()) {
+			redirect.addFlashAttribute("taskNameError", true);
+			return "redirect:/dashboard";
+		}
 		Task task = new Task();
 		task.setName(taskName);
 		task.setStatus(false);
@@ -85,7 +90,7 @@ public class UserController {
 	/*
 	 * Deletes a task
 	 */
-	@RequestMapping(value="/deleteTask/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
 	public String deleteTask(@PathVariable("id") Integer taskId, @SessionAttribute("user") Useraccount loggedInUser) {
 		Task existingTask = taskRepository.findTaskById(taskId);
 		if (loggedInUser.removeTask(existingTask)) {
@@ -99,7 +104,7 @@ public class UserController {
 	/*
 	 * Navigates to task edit page upon request
 	 */
-	@RequestMapping(value="/editTask/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
 	public String editTaskPage(@PathVariable("id") Integer taskId, @SessionAttribute("user") Useraccount loggedInUser, Model model) {
 		Task existingTask = taskRepository.findTaskById(taskId);
 		model.addAttribute("selectedTask", existingTask);
@@ -110,7 +115,7 @@ public class UserController {
 	/*
 	 * Updates a task
 	 */
-	@RequestMapping(value="/editTask/edit", method=RequestMethod.POST)
+	@RequestMapping(value="/edit-do", method=RequestMethod.POST)
 	public String editTask(@ModelAttribute("selectedTask") Task editedTask, @SessionAttribute("user") Useraccount loggedInUser) {
 		//TODO: Check for empty 	name
 		loggedInUser.mergeTask(editedTask);
@@ -133,7 +138,7 @@ public class UserController {
 	/*
 	 * Updates the user
 	 */
-	@RequestMapping(value="/user-edit", method=RequestMethod.POST)
+	@RequestMapping(value="/user-edit-do", method=RequestMethod.POST)
 	public String editUser(@ModelAttribute("userEdit") Useraccount userEdit, @SessionAttribute("user") Useraccount loggedInUser, 
 			BindingResult bindingResult, Model model) {
 
