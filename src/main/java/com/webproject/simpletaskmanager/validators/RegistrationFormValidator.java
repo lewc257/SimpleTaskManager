@@ -10,6 +10,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.webproject.simpletaskmanager.forms.RegistrationForm;
+import com.webproject.simpletaskmanager.repositories.UserInfoRepository;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
 
 @Component
@@ -17,6 +18,9 @@ public class RegistrationFormValidator implements Validator{
 	
 	@Autowired
 	public UserRepository userRepository;
+	
+	@Autowired
+	public UserInfoRepository userInfoRepository;
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -32,7 +36,9 @@ public class RegistrationFormValidator implements Validator{
 			errors.rejectValue("username", "username.exists");
 		}
 		
-		//TODO: Check for duplicate emails
+		if (userInfoRepository.findByEmail(form.getPersonalEmail()) != null){
+			errors.rejectValue("personalEmail", "personalEmail.exists");
+		}
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.required");
 		if (form.getPassword().length() < 8) {
@@ -50,7 +56,7 @@ public class RegistrationFormValidator implements Validator{
 		}
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personalEmail", "personalEmail.required");
-		if (!form.getPersonalEmail().matches("(.)+")) {
+		if (!form.getPersonalEmail().matches(Constants.EMAIL_REGEX)) {
 			errors.rejectValue("personalEmail", "personalEmail.mismatch");
 		}
 	}

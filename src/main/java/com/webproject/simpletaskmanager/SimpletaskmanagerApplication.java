@@ -34,12 +34,6 @@ import com.webproject.simpletaskmanager.repositories.UserRepository;
 @SpringBootApplication
 public class SimpletaskmanagerApplication implements CommandLineRunner {
 	
-	@Autowired
-	UserRepository uRepos;
-	
-	@Autowired
-	TaskRepository tRepos;
-	
 	public static void main(String[] args) {
 		SpringApplication.run(SimpletaskmanagerApplication.class, args);
 	}
