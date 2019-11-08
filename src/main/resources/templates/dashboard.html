@@ -6,7 +6,7 @@
 		<form th:action="@{/endsession}" method="POST">
 			<input type="submit" value="Logout"/>
 		</form>
-		<a th:href="@{/user_edit_form}">Edit Info</a>
+		<a th:href="@{/user-edit}">Edit Info</a>
 	</header>
 	<body>
 		<form th:action="@{/addTask}" th:object="${name}" method="POST">

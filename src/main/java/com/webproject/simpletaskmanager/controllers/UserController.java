@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +33,7 @@ import com.webproject.simpletaskmanager.entities.Useraccount;
 import com.webproject.simpletaskmanager.forms.RegistrationForm;
 import com.webproject.simpletaskmanager.repositories.TaskRepository;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
-import com.webproject.simpletaskmanager.repositoriesdao.TaskDAO;
-import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
+import com.webproject.simpletaskmanager.validators.UserValidator;
 
 
 /**
@@ -51,6 +51,9 @@ public class UserController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	UserValidator userValidator;
 	
 	/*
 	 * Loads the dashboard upon request
@@ -120,7 +123,7 @@ public class UserController {
 	/*
 	 * Navigates to the user's edit form upon request
 	 */
-	@RequestMapping(value="/user_edit_form", method=RequestMethod.GET)
+	@RequestMapping(value="/user-edit", method=RequestMethod.GET)
 	public String editUserPage(Model model, @SessionAttribute Useraccount user) {
 		model.addAttribute("userInfo", user);
 		return "user_edit_form";
@@ -130,8 +133,15 @@ public class UserController {
 	/*
 	 * Updates the user
 	 */
-	@RequestMapping(value="/updateUser", method=RequestMethod.POST)
-	public String editUser(@ModelAttribute("userInfo") Useraccount userEdit, @SessionAttribute("user") Useraccount loggedInUser, Model model) {
+	@RequestMapping(value="/user-edit", method=RequestMethod.POST)
+	public String editUser(@ModelAttribute("userInfo") Useraccount userEdit, @SessionAttribute("user") Useraccount loggedInUser, 
+			BindingResult bindingResult, Model model) {
+		
+		userValidator.validate(userEdit, bindingResult);
+		if (bindingResult.hasErrors()) {
+			return "user_edit_form";
+		}
+			
 		String username = userEdit.getUsername();
 		String password = userEdit.getPassword();
 		String firstName = userEdit.getUserInfo().getFirstName();

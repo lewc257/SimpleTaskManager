@@ -37,7 +37,6 @@ import com.webproject.simpletaskmanager.entities.Useraccount;
 import com.webproject.simpletaskmanager.forms.LoginForm;
 import com.webproject.simpletaskmanager.forms.RegistrationForm;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
-import com.webproject.simpletaskmanager.repositoriesdao.UseraccountDAO;
 import com.webproject.simpletaskmanager.validators.LoginFormValidator;
 import com.webproject.simpletaskmanager.validators.RegistrationFormValidator;
 

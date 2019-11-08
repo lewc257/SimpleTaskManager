@@ -41,17 +41,17 @@ public class RegistrationFormValidator implements Validator{
 		}
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.required");
-		if (form.getPassword().length() < 8) {
+		if (form.getPassword().length() < Constants.PASSWORD_MIN_LEN) {
 			errors.rejectValue("password", "password.invalidLength");
 		}
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required");
-		if (!form.getFirstName().matches("^[A-Z][a-zA-Z]+")) {
+		if (!form.getFirstName().matches(Constants.FIRSTNAME_REGEX)) {
 			errors.rejectValue("firstName", "firstName.mismatch");
 		}
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName","lastName.required");
-		if (!form.getLastName().matches("^[A-Z][a-zA-Z]+")) {
+		if (!form.getLastName().matches(Constants.LASTNAME_REGEX)) {
 			errors.rejectValue("lastName", "lastName.mismatch");
 		}
 		
