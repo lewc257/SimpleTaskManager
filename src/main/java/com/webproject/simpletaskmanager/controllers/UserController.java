@@ -174,21 +174,7 @@ public class UserController {
 		return "redirect:/dashboard";
 	}
 	
-	/*
-	 * TODO:Filters a task by name
-	 */
 	
-	/*
-	 * TODO:Sorts the tasks by name
-	 */
-	
-	/*
-	 * TODO:Sorts the tasks by date
-	 */
-	
-	/*
-	 * Logs the user out upon request
-	 */
 	@RequestMapping(value="/endsession", method=RequestMethod.POST)
 	public String logout(SessionStatus status, @SessionAttribute("user") Useraccount loggedInUser) {
 		status.setComplete();
