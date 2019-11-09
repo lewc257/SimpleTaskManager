@@ -174,6 +174,12 @@ public class UserController {
 		return "redirect:/dashboard";
 	}
 	
+	@RequestMapping(value="/stats", method=RequestMethod.GET)
+	public String userstatsPage(RedirectAttributes redirect, @SessionAttribute("user") Useraccount loggedInUser) {
+		redirect.addFlashAttribute("user", loggedInUser);
+		return "redirect:/userstats";
+	}
+	
 	
 	@RequestMapping(value="/endsession", method=RequestMethod.POST)
 	public String logout(SessionStatus status, @SessionAttribute("user") Useraccount loggedInUser) {

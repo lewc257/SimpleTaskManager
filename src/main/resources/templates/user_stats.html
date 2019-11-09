@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
+<header>
+
+</header>
+<body>
+<table border="1">
+	<tr>
+		<td>Date Joined:</td>
+		<td><label th:text="${dateJoined}"></label></td>
+	</tr>
+	<tr>
+		<td>Total number of tasks:</td>
+		<td><label th:text="${noTasks}"></label></td>
+	</tr>
+	<tr>
+		<td>Done:</td>
+		<td><label  th:text="${noDone}"></label></td>
+	</tr>
+	<tr>
+		<td>In Progress:</td>
+		<td><label  th:text="${noInProgress}"></label></td>
+	</tr>
+</table>
+</body>
+</html>

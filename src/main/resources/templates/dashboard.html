@@ -3,6 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <link rel="stylesheet" type="text/css" th:href="@{/css/messages.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/table_attr.css}" />
 <script type="text/javascript">
 	function tableFilter() {
 		var input, filter, table, tr, td, i, txtValue;
@@ -29,32 +30,6 @@
 		}
 	}
 </script>
-<style>
-/*Reference: https://stackoverflow.com/questions/8232713/how-to-display-scroll-bar-onto-a-html-table*/
-	#table-wrapper {
-	  position:relative;
-	}
-	#table-scroll {
-	  height:350px;
-	  overflow:auto;  
-	  margin-top:20px;
-	}
-	#table-wrapper table {
-	  width:50%;
-	}
-	#table-wrapper table * {
-	  background:white;
-	}
-	
-	#table-wrapper table thead th .text {
-	  position:absolute;   
-	  top:-20px;
-	  z-index:2;
-	  height:20px;
-	  width:35%;
-	  border:1px solid red;
-	}
-</style>
 </head>
 <header>
 	<h1>
@@ -62,7 +37,9 @@
 	</h1>
 	<p>
 		<form th:action="@{/endsession}" method="POST">
-			<input type="submit" value="Logout" /> <a th:href="@{/user-edit}">Edit Info</a>
+			<input type="submit" value="Logout" /> 
+			<a th:href="@{/user-edit}">Edit Info</a>
+			<a th:href="@{/stats}">Statistics</a>
 		</form>
 	</p>
 </header>
