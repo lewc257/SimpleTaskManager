@@ -29,6 +29,32 @@
 		}
 	}
 </script>
+<style>
+/*Reference: https://stackoverflow.com/questions/8232713/how-to-display-scroll-bar-onto-a-html-table*/
+	#table-wrapper {
+	  position:relative;
+	}
+	#table-scroll {
+	  height:350px;
+	  overflow:auto;  
+	  margin-top:20px;
+	}
+	#table-wrapper table {
+	  width:50%;
+	}
+	#table-wrapper table * {
+	  background:white;
+	}
+	
+	#table-wrapper table thead th .text {
+	  position:absolute;   
+	  top:-20px;
+	  z-index:2;
+	  height:20px;
+	  width:35%;
+	  border:1px solid red;
+	}
+</style>
 </head>
 <header>
 	<h1>
@@ -49,26 +75,30 @@
 		</form>
 	</p>
  	<input type="text" id="searchText" onkeyup="tableFilter()" placeholder="Search.." />
-	<table id="taskTable">
-		<thead>
-			<tr>
-				<td>Task</td>
-				<td>Status</td>
-				<td>Created</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="task : ${user.tasks}">
-				<td th:text="${task.name}"></td>
-				<td th:switch="${task.status}">
-					<div th:case="true">Done</div>
-					<div th:case="false">In Progress</div>
-				</td>
-				<td th:text="${task.created}"></td>
-				<td><a th:href="@{/delete/{id}(id=${task.id})}">Delete</a></td>
-				<td><a th:href="@{/edit/{id}(id=${task.id})}">Edit</a></td>
-			</tr>
-		</tbody>
-	</table>
+ 	<div id="table-wrapper">
+ 		<div id="table-scroll">
+			<table id="taskTable" >
+				<thead>
+					<tr>
+						<td>Task</td>
+						<td>Status</td>
+						<td>Created</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="task : ${user.tasks}">
+						<td th:text="${task.name}"></td>
+						<td th:switch="${task.status}">
+							<div th:case="true">Done</div>
+							<div th:case="false">In Progress</div>
+						</td>
+						<td th:text="${task.created}"></td>
+						<td><a th:href="@{/delete/{id}(id=${task.id})}">Delete</a></td>
+						<td><a th:href="@{/edit/{id}(id=${task.id})}">Edit</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

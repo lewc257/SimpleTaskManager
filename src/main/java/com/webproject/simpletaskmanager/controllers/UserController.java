@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -106,9 +107,13 @@ public class UserController {
 	 */
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
 	public String editTaskPage(@PathVariable("id") Integer taskId, @SessionAttribute("user") Useraccount loggedInUser, Model model) {
-		Task existingTask = taskRepository.findTaskById(taskId);
-		model.addAttribute("selectedTask", existingTask);
-		return "edit_task";
+		Optional<Task> existingTask = loggedInUser.getTasks().stream().filter(t -> t.getId() == taskId).findFirst();
+		if (existingTask.isPresent()) {
+			model.addAttribute("selectedTask", existingTask.get());
+			return "edit_task";
+		}
+		return "redirect:/dashboard";
+		
 	}
 	
 	
