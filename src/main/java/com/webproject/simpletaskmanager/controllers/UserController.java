@@ -168,19 +168,7 @@ public class UserController {
 		//TODO: Log save
 		return "redirect:/dashboard";
 	}
-	
-	/*
-	 * TODO:Filters a task by name
-	 */
-	
-	/*
-	 * TODO:Sorts the tasks by name
-	 */
-	
-	/*
-	 * TODO:Sorts the tasks by date
-	 */
-	
+
 	/*
 	 * Logs the user out upon request
 	 */

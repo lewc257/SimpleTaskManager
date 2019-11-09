@@ -1,42 +1,74 @@
 <!DOCTYPE HTML>
 
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/messages.css}"/>
-	</head>
-	<header>
-		<h1>Welcome <label th:text="${user.username}"></label></h1>
+<head>
+<link rel="stylesheet" type="text/css" th:href="@{/css/messages.css}" />
+<script type="text/javascript">
+	function tableFilter() {
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("searchText");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("taskTable");
+		tbody = table.getElementsByTagName("tbody")[0];
+		tr = tbody.getElementsByTagName("tr");
+
+		for (var i = 0; i < tr.length; i++) {
+			tds = tr[i].getElementsByTagName("td");
+			for (var j = 0; j < tds.length - 2; j++) {
+				td = tr[i].getElementsByTagName("td")[j];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+						break;
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	}
+</script>
+</head>
+<header>
+	<h1>
+		User: <label th:text="${user.username}"></label>
+	</h1>
+	<p>
 		<form th:action="@{/endsession}" method="POST">
-			<input type="submit" value="Logout"/>
+			<input type="submit" value="Logout" /> <a th:href="@{/user-edit}">Edit Info</a>
 		</form>
-		<a th:href="@{/user-edit}">Edit Info</a>
-	</header>
-	<body>
-		<p class="error_message" th:if="${taskNameError}">The name of the task is required</p>
+	</p>
+</header>
+<body>
+	<p class="error_message" th:if="${taskNameError}">The name of the task is required</p>
+	
+	<p>
 		<form th:action="@{/add}" th:object="${name}" method="POST">
-			<input type="text" id="name" name="name"/>
-			<input type="submit" value="Add Task"/>
+			<input type="text" id="name" name="name" placeholder="Enter task name.." /><input type="submit" value="Add Task" />
 		</form>
-		<table>
-			<thead>
-				<tr>
-					<td>Task</td>
-					<td>Status</td>
-					<td>Created</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="task : ${user.tasks}">
-					<td th:text="${task.name}"></td>
-					<td th:switch="${task.status}">
-						<div th:case="true">Done</div>
-						<div th:case="false">In Progress</div>
-					</td>
-					<td th:text="${task.created}"></td>
-					<td><a th:href="@{/delete/{id}(id=${task.id})}">Delete</a></td>
-					<td><a th:href="@{/edit/{id}(id=${task.id})}">Edit</a></td>
-				</tr>
-			</tbody>
-		</table>
-	</body>
+	</p>
+ 	<input type="text" id="searchText" onkeyup="tableFilter()" placeholder="Search.." />
+	<table id="taskTable">
+		<thead>
+			<tr>
+				<td>Task</td>
+				<td>Status</td>
+				<td>Created</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="task : ${user.tasks}">
+				<td th:text="${task.name}"></td>
+				<td th:switch="${task.status}">
+					<div th:case="true">Done</div>
+					<div th:case="false">In Progress</div>
+				</td>
+				<td th:text="${task.created}"></td>
+				<td><a th:href="@{/delete/{id}(id=${task.id})}">Delete</a></td>
+				<td><a th:href="@{/edit/{id}(id=${task.id})}">Edit</a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
 </html>
