@@ -61,6 +61,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
 	public String dashboardPage(HttpServletRequest request, SessionStatus status, Model model) {
+		//TODO: if the user is null, throw an exception and display it on the error page
 		Useraccount user = (Useraccount) model.asMap().get("user");
 		model.addAttribute("user", user);
 		return "dashboard";
@@ -112,6 +113,7 @@ public class UserController {
 			model.addAttribute("selectedTask", existingTask.get());
 			return "edit_task";
 		}
+		//TODO: if the task is not present, throw an exception and display it on the error page
 		return "redirect:/dashboard";
 		
 	}
@@ -140,6 +142,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user-edit", method=RequestMethod.GET)
 	public String editUserPage(Model model, @SessionAttribute Useraccount user) {
+		//TODO: if the user or userInfo is null, throw an exception and display it on the error page
 		model.addAttribute("userEdit", user);
 		return "user_edit_form";
 	}

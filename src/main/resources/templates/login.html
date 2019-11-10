@@ -38,5 +38,11 @@
 				<a th:href="@{/registration}">Sign Up</a>
 			</div>
 		</div>
+		<table>
+			<tr th:each="u : ${all}">
+				<td th:text="${u.username}"></td>
+				<td th:text="${u.password}"></td>
+			</tr>
+		</table>
 	</body>
 </html>

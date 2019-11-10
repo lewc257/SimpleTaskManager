@@ -2,6 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/table_attr.css}"/>
 </head>
 
 <header>
@@ -25,6 +26,29 @@
 		<td>In Progress:</td>
 		<td><label  th:text="${noInProgress}"></label></td>
 	</tr>
+	<tr>
+		<td>Done Percentage:</td>
+		<td><label th:text="${donePerc}"></label></td>
+	</tr>
 </table>
+<div id="table-wrapper">
+	<div id="table-scroll">
+		<table>
+			<thead>
+				<tr>
+					<td>Task</td>
+					<td>In Progress (duration in days)</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="task : ${tasks}">
+					<td th:text="${task.name}"></td>
+					<td th:text="${task.getDaysFromCreationDate()}"></td>
+					<td th:text="${task.getTimespanFromCreationDate()}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
 </body>
 </html>

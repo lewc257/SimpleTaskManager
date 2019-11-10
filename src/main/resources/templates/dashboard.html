@@ -52,7 +52,10 @@
 		</form>
 	</p>
  	<input type="text" id="searchText" onkeyup="tableFilter()" placeholder="Search.." />
- 	<div id="table-wrapper">
+ 	<p>
+ 		<div th:if="${user.tasks.isEmpty()}">You don't have any tasks. Add a task.</div>
+ 	</p>
+ 	<div th:if="${!user.tasks.isEmpty()}" id="table-wrapper">
  		<div id="table-scroll">
 			<table id="taskTable" >
 				<thead>

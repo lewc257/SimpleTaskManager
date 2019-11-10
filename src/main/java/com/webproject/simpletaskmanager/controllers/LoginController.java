@@ -67,6 +67,7 @@ public class LoginController{
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginPage(Model model) {
 		model.addAttribute("loginForm", new LoginForm());
+		model.addAttribute("all", userRepository.findAll());
 		return "login";
 	}
 	
@@ -88,24 +89,20 @@ public class LoginController{
 		
 		Map<String, String> messages = new HashMap<String, String>();
 		
-		checkDetails(loginForm, user, messages);
+		if (user == null) {
+			messages.put("usernameInvalid", "Username is invalid");
+		} else {
+			boolean passwordIsValid = user.getPassword().equals(loginForm.getPassword());
+			if (!passwordIsValid){
+				messages.put("passwordInvalid", "Password is invalid");
+			}
+		}
 		if (!messages.isEmpty()) {
 			model.addAllAttributes(messages);
 			return "login";
 		}
 		redirectAttributes.addFlashAttribute("user", user);
 		return "redirect:/dashboard";
-	}
-	
-	private void checkDetails(LoginForm form, Useraccount user, Map<String, String> messages){
-		if (user == null) {
-			messages.put("usernameInvalid", "Username is invalid");
-		} else {
-			boolean passwordIsValid = user.getPassword().equals(form.getPassword());
-			if (!passwordIsValid){
-				messages.put("passwordInvalid", "Password is invalid");
-			}
-		}
 	}
 	
 	
