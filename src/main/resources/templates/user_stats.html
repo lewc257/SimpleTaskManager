@@ -3,6 +3,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/table_attr.css}"/>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script th:inline="javascript">
+	//https://canvasjs.com/html5-javascript-column-chart/
+	window.onload = function () {
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			title:{
+				text: "In Progress vs Done"
+			},
+			axisY: {
+				title: "Count"
+			},
+			dataPointWidth: 200,
+			data: [{        
+				type: "column",   
+				legendMarkerColor: "grey",
+				dataPoints: [      
+					{ y: /*<![CDATA[*/ /*[[${noDone}]]*/ 0 /*]]>*/, label: "Done" },
+					{ y: /*<![CDATA[*/ /*[[${noInProgress}]]*/ 0 /*]]>*/,  label: "In Progress" },
+				]
+			}]
+		});
+		chart.render();
+
+		}
+	</script>
 </head>
 
 <header>
@@ -35,5 +63,8 @@
 		<td><label th:text="${donePerc}"></label></td>
 	</tr>
 </table>
+<p>
+<div id="chartContainer" style="height: 300px; width: 50%;"></div>
+</p>
 </body>
 </html>
