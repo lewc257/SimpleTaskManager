@@ -9,10 +9,14 @@
 
 </header>
 <body>
-<table border="1">
+<table>
 	<tr>
 		<td>Date Joined:</td>
-		<td><label th:text="${dateJoined}"></label></td>
+		<td><label th:text="${dateTimeHelper.getDateDescription(user.created)}"></label></td>
+	</tr>
+	<tr>
+		<td>You've had your account for:</td>
+		<td><label th:text="${dateTimeHelper.getTimespanFromDate(user.created)}"></label></td>
 	</tr>
 	<tr>
 		<td>Total number of tasks:</td>
@@ -27,28 +31,9 @@
 		<td><label  th:text="${noInProgress}"></label></td>
 	</tr>
 	<tr>
-		<td>Done Percentage:</td>
+		<td>Completion:</td>
 		<td><label th:text="${donePerc}"></label></td>
 	</tr>
 </table>
-<div id="table-wrapper">
-	<div id="table-scroll">
-		<table>
-			<thead>
-				<tr>
-					<td>Task</td>
-					<td>In Progress (duration in days)</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="task : ${tasks}">
-					<td th:text="${task.name}"></td>
-					<td th:text="${task.getDaysFromCreationDate()}"></td>
-					<td th:text="${task.getTimespanFromCreationDate()}"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
 </body>
 </html>

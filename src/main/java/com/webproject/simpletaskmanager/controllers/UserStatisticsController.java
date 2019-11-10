@@ -32,12 +32,6 @@ public class UserStatisticsController {
 		Useraccount user = (Useraccount) model.asMap().get("user");
 		model.addAttribute("user", user);
 		if (user != null) {
-			Timestamp created = user.getCreated();
-			Long days = getDateDiff(created, new Date(), TimeUnit.DAYS);
-			SimpleDateFormat formatter = new SimpleDateFormat("dd MMMMM yyyy");
-			String formattedDateJoined = String.format("%s (%d days ago)", formatter.format(user.getCreated()), days);
-			model.addAttribute("dateJoined",  formattedDateJoined);
-			
 			Integer size = user.getTasks().size();
 			model.addAttribute("noTasks", size);
 			

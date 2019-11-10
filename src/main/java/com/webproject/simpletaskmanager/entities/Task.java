@@ -5,11 +5,12 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.persistence.*;
-import static com.webproject.simpletaskmanager.extrautils.DateTimeHelpers.*;
+
+import com.webproject.simpletaskmanager.extrautils.DateTimeHelpers;
 
 @Entity
 @Table(name = "task")
-public class Task {
+public class Task{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "task_id")
@@ -77,15 +78,6 @@ public class Task {
 		this.setCreated(newTask.getCreated());
 		this.setUseraccount(newTask.getUseraccount());
 		return false;
-	}
-
-	public long getDaysFromCreationDate() {
-		return getDateDiff(created, new Date(), TimeUnit.DAYS);
-	}
-
-	public String getTimespanFromCreationDate() {
-		long milli = getDateDiff(created, new Date(), TimeUnit.MILLISECONDS);
-		return getTime(milli);
 	}
 
 	@Override

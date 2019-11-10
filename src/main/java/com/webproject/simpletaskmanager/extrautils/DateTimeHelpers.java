@@ -1,5 +1,10 @@
 package com.webproject.simpletaskmanager.extrautils;
 
+import static com.webproject.simpletaskmanager.extrautils.DateTimeHelpers.getDateDiff;
+import static com.webproject.simpletaskmanager.extrautils.DateTimeHelpers.getTime;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -17,5 +22,19 @@ public class DateTimeHelpers {
 		long days = hours / 24;
 		return String.format("%02d days, %02d hours, %02d minutes, %02d seconds", 
 				days % 24, hours % 60, minutes % 60, seconds % 60);
+	}
+	
+	public static long getDaysFrom(Date start) {
+		return getDateDiff(start, new Date(), TimeUnit.DAYS);
+	}
+
+	public static String getTimespanFromDate(Date start) {
+		long milli = getDateDiff(start, new Date(), TimeUnit.MILLISECONDS);
+		return getTime(milli);
+	}
+	
+	public static String getDateDescription(Date date) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd MMMMM yyyy");
+		return formatter.format(date);
 	}
 }

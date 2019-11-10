@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.webproject.simpletaskmanager.entities.Task;
 import com.webproject.simpletaskmanager.entities.UserInfo;
 import com.webproject.simpletaskmanager.entities.Useraccount;
+import com.webproject.simpletaskmanager.extrautils.DateTimeHelpers;
 import com.webproject.simpletaskmanager.forms.RegistrationForm;
 import com.webproject.simpletaskmanager.repositories.TaskRepository;
 import com.webproject.simpletaskmanager.repositories.UserRepository;
@@ -64,6 +65,7 @@ public class UserController {
 		//TODO: if the user is null, throw an exception and display it on the error page
 		Useraccount user = (Useraccount) model.asMap().get("user");
 		model.addAttribute("user", user);
+		model.addAttribute("dateTimeHelper", new DateTimeHelpers());
 		return "dashboard";
 	}
 	
