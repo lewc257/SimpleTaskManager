@@ -1,8 +1,5 @@
 package com.webproject.simpletaskmanager.extrautils;
 
-import static com.webproject.simpletaskmanager.extrautils.DateTimeHelpers.getDateDiff;
-import static com.webproject.simpletaskmanager.extrautils.DateTimeHelpers.getTime;
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +18,7 @@ public class DateTimeHelpers {
 		long hours = minutes / 60;
 		long days = hours / 24;
 		return String.format("%02d days, %02d hours, %02d minutes, %02d seconds", 
-				days % 24, hours % 60, minutes % 60, seconds % 60);
+				days, hours % 24, minutes % 60, seconds % 60);
 	}
 	
 	public static long getDaysFrom(Date start) {
